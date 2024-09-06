@@ -1,0 +1,62 @@
+import AppLayout from "../layouts/AppLayout";
+import { Navigate } from "react-router-dom";
+
+import { Users } from "../modules/user/pages/Users";
+import { NewUser } from "../modules/user/pages/NewUser";
+import ProtectedRoute from "../storage/ProtectedRoute";
+import { Clients } from "../modules/client/pages/Clients";
+import { NewClient } from "../modules/client/pages/NewClient";
+import Products from "../modules/product/pages/Products";
+import NewProduct from "../modules/product/pages/NewProduct";
+import Payment from "../modules/payment/pages/Payment";
+
+const appRouter = [
+  {
+    path: "/",
+    element: (
+      <ProtectedRoute>
+        <AppLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        path: "/",
+        element: <Users />,
+      },
+      {
+        path: "/users",
+        element: <Users />,
+      },
+      {
+        path: "/new-user",
+        element: <NewUser />,
+      },
+      {
+        path: "/clients",
+        element: <Clients />,
+      },
+      {
+        path: "/new-client",
+        element: <NewClient />,
+      },
+      {
+        path: "/products",
+        element: <Products />,
+      },
+      {
+        path: "/payment",
+        element: <Payment />,
+      },
+      {
+        path: "/new-product",
+        element: <NewProduct />,
+      },
+      {
+        path: "*",
+        element: <Navigate to="/" />,
+      },
+    ],
+  },
+];
+
+export default appRouter;
