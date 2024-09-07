@@ -143,29 +143,29 @@ function AppLayout() {
                       aria-controls="users"
                     >
                       <i className="link-icon" data-feather="users"></i>
-                      <span className="link-title">Doctores</span>
+                      <span className="link-title">Administrador</span>
                       <i className="link-arrow" data-feather="chevron-down"></i>
                     </a>
                     <div className="collapse" id="users">
                       <ul className="nav sub-menu">
                         <li className="nav-item">
                           <NavLink to="/new-user" className="nav-link">
-                            Nuevo doctor
+                            Nuevo administrador
                           </NavLink>
                         </li>
                         <li className="nav-item">
                           <NavLink to="/users" className="nav-link">
-                            Doctores
+                            Administrador
                           </NavLink>
                         </li>
                       </ul>
                     </div>
                   </li>
-                  <li className="nav-item nav-category">Configuración</li>
+                  <li className="nav-item nav-category">Datos</li>
                   <li className="nav-item">
                     <NavLink to="/payment" className="nav-link">
                       <i className="link-icon" data-feather="shield"></i>
-                      <span className="link-title">Roles y permisos</span>
+                      <span className="link-title">Reportes</span>
                     </NavLink>
                   </li>
                 </>

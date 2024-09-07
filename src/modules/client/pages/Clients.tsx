@@ -124,7 +124,7 @@ export function Clients() {
             <a href="#">Usuario</a>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
-            Clientes
+            Lista deVoluntarios
           </li>
         </ol>
       </nav>
@@ -153,6 +153,13 @@ export function Clients() {
               <th>Dirección</th>
               <th>Email</th>
               <th>Cumpleaños</th>
+
+
+              <th>C. Salud</th>
+              <th>Departamento</th>
+              <th>Rol</th>
+
+
               <th>Contraseña</th>
               <th>Acciones</th>
             </tr>
@@ -167,6 +174,13 @@ export function Clients() {
                   <td>{usuario.Address}</td>
                   <td>{usuario.Mail}</td>
                   <td>{usuario.BirthDate}</td>
+
+
+                  <td>{}</td>
+                  <td>{}</td>
+                  <td>{}</td>
+
+                  
                   <td>{usuario.Password}</td>
                   <td>
                     <button
@@ -298,6 +312,10 @@ export function Clients() {
                 </Form.Group>
               </div>
             </div>
+
+            
+
+            
             <div className="row">
               <div className="col-md-6 mb-3">
                 <Form.Group controlId="formPassword">

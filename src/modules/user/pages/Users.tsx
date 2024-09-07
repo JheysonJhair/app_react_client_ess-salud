@@ -145,12 +145,19 @@ export function Users() {
         >
           <thead>
             <tr>
-              <th>Nombres y apellidos</th>
+            <th>Nombres y apellidos</th>
               <th>DNI</th>
               <th>Teléfono</th>
               <th>Dirección</th>
               <th>Email</th>
               <th>Cumpleaños</th>
+
+
+              <th>C. Salud</th>
+              <th>Departamento</th>
+              <th>Rol</th>
+
+
               <th>Contraseña</th>
               <th>Acciones</th>
             </tr>
@@ -165,7 +172,16 @@ export function Users() {
                   <td>{usuario.Address}</td>
                   <td>{usuario.Mail}</td>
                   <td>{usuario.BirthDate}</td>
+
+
+                  <td>{}</td>
+                  <td>{}</td>
+                  <td>{}</td>
+
+
                   <td>{usuario.Password}</td>
+
+                  
                   <td>
                     <button
                       className="btn btn-warning btn-sm me-2"

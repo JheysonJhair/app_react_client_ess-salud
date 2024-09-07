@@ -162,201 +162,58 @@ const Products: React.FC = () => {
       <nav className="page-breadcrumb">
         <ol className="breadcrumb">
           <li className="breadcrumb-item">
-            <a href="#">Producto</a>
+            <a href="#">ESSALUD</a>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
-            Lista de productos
+            Lista de centros ESSALUD
           </li>
         </ol>
       </nav>
-      <div className="container mt-4">
-        <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5 product-grid">
-          {products.map((product) => (
-            <div key={product.IdProduct} className="col">
-              <div className="card">
-                <img
-                  src={product.UrlImage}
-                  className="card-img-top"
-                  alt={product.Name}
-                />
-                <div className="card-body" style={{ border: "none" }}>
-                  <h6
-                    className="card-title cursor-pointer"
-                    style={{ color: "#C84751" }}
-                  >
-                    {product.Name}
-                  </h6>
-                  <p className="my-4">{product.NutritionalInformation}</p>
-                  <div className="clearfix">
-                    <p className="mb-0 float-start">
-                      <strong>Stock:</strong> {product.Stock}
-                    </p>
-                    <p className="mb-0 float-end fw-bold">s./{product.Price}</p>
-                  </div>
-                  <Button variant="primary" onClick={() => handleEdit(product)}>
-                    Editar
-                  </Button>
-                  <Button
-                    variant=""
-                    className="ms-2"
-                    onClick={() => handleDelete(product.IdProduct)}
-                    style={{
-                      borderColor: "#C84751",
-                      borderWidth: "2px",
-                      backgroundColor: "transparent",
-                      color: "#C84751",
-                    }}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.backgroundColor = "#C84751")
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.backgroundColor = "transparent")
-                    }
-                  >
-                    Eliminar
-                  </Button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
 
-        <Modal show={showEditModal} onHide={handleCloseModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>Editar Producto</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            {currentProduct && (
-              <div className="row">
-                <div className="col-md-6">
-                  <div className="mb-3">
-                    <label htmlFor="name" className="form-label">
-                      Nombre
-                    </label>
-                    <input
-                      id="name"
-                      className="form-control"
-                      name="Name"
-                      type="text"
-                      value={currentProduct.Name}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="description" className="form-label">
-                      Descripción
-                    </label>
-                    <textarea
-                      id="description"
-                      className="form-control"
-                      name="Description"
-                      value={currentProduct.Description}
-                      onChange={handleChange}
-                      style={{ height: "90px" }}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label
-                      htmlFor="nutritionalInformation"
-                      className="form-label"
-                    >
-                      Información Nutricional
-                    </label>
-                    <textarea
-                      id="nutritionalInformation"
-                      className="form-control"
-                      name="NutritionalInformation"
-                      value={currentProduct.NutritionalInformation}
-                      onChange={handleChange}
-                      style={{ height: "90px" }}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="price" className="form-label">
-                      Precio
-                    </label>
-                    <input
-                      id="price"
-                      className="form-control"
-                      name="Price"
-                      type="number"
-                      value={currentProduct.Price}
-                      onChange={handleChange}
-                    />
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="mb-3">
-                    <label htmlFor="stock" className="form-label">
-                      Stock
-                    </label>
-                    <input
-                      id="stock"
-                      className="form-control"
-                      name="Stock"
-                      type="number"
-                      value={currentProduct.Stock}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="file" className="form-label">
-                      Imagen
-                    </label>
-                    {imagePreview && (
-                      <div className="mb-2">
-                        <img
-                          src={imagePreview}
-                          alt="Vista previa"
-                          style={{
-                            width: "100%",
-                            maxHeight: "180px",
-                            objectFit: "contain",
-                          }}
-                        />
-                      </div>
-                    )}
-                    <input
-                      id="file"
-                      className="form-control"
-                      name="file"
-                      type="file"
-                      onChange={handleFileChange}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="category" className="form-label">
-                      Categoría
-                    </label>
-                    <select
-                      className="form-select"
-                      name="Category" // Cambia 'category' a 'Category'
-                      id="category"
-                      value={currentProduct.Category}
-                      onChange={handleChange}
-                    >
-                      <option value="" disabled>
-                        Selecciona una categoría
-                      </option>
-                      <option value="5 estrellas">Excelente</option>
-                      <option value="4 estrellas">Bueno</option>
-                      <option value="2 estrellas">Regular</option>
-                      <option value="0 estrellas">Bajo</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            )}
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseModal}>
-              Cerrar
-            </Button>
-            <Button variant="primary" onClick={handleSaveChanges}>
-              Guardar Cambios
-            </Button>
-          </Modal.Footer>
-        </Modal>
+      <div className="mb-3">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Buscar centro de Salud..."
+        />
+      </div>
+
+      <div className="table-responsive">
+        <table
+          id="example"
+          className="table table-striped table-bordered"
+          style={{ width: "100%" }}
+        >
+          <thead>
+            <tr>
+              <th>Centro de Salud</th>
+              <th>Código</th>
+              <th>Número de Teléfono</th>
+              <th>Email</th>
+              <th>Dirección</th>
+              <th>Departamento</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>John Doe</td>
+              <td>12345678</td>
+              <td>997892687</td>
+              <td>123@gmail.com</td>
+              <td>Patibamba Baja</td>
+              <td>Abancay</td>
+              <td>
+                <button className="btn btn-warning btn-sm me-2">
+                  Editar
+                </button>
+                <button className="btn btn-danger btn-sm">
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   );

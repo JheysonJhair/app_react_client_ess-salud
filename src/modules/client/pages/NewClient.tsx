@@ -193,6 +193,7 @@ export function NewClient() {
                     </div>
                   </div>
                 </div>
+
                 <div className="row">
                   <div className="col-sm-4">
                     <div className="mb-3">
@@ -242,6 +243,48 @@ export function NewClient() {
                     </div>
                   </div>
                 </div>
+                
+
+                <div className="row">
+                  <div className="col-sm-4">
+                    <div className="mb-3">
+                      <label className="form-label">Centro de Salud</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="HealthCenter"
+                        placeholder="Ingrese el nombre del centro de salud"
+                      />
+                      <div className="text-danger"></div>
+                    </div>
+                  </div>
+                  <div className="col-sm-4">
+                    <div className="mb-3">
+                      <label className="form-label">Departamento</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="Department"
+                        placeholder="Ingrese su departamento"
+                      />
+                      <div className="text-danger"></div>
+                    </div>
+                  </div>
+                  <div className="col-sm-4">
+                    <div className="mb-3">
+                      <label className="form-label">Rol</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="Role"
+                        placeholder="Ingrese su rol"
+                      />
+                      <div className="text-danger"></div>
+                    </div>
+                  </div>
+                </div>
+
+
                 <div className="row">
                   <div className="col-sm-6">
                     <div className="mb-3">

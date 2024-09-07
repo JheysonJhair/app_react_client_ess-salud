@@ -128,10 +128,10 @@ export function NewUser() {
       <nav className="page-breadcrumb">
         <ol className="breadcrumb">
           <li className="breadcrumb-item">
-            <a href="#">Usuario</a>
+            <a href="#">Administrador</a>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
-            Crear nuevo usuario
+            Crear nuevo administrador
           </li>
         </ol>
       </nav>
@@ -140,7 +140,7 @@ export function NewUser() {
         <div className="col-md-12 stretch-card">
           <div className="card">
             <div className="card-body">
-              <h6 className="card-title">Registrar usuario</h6>
+              <h6 className="card-title">Registrar Administrador</h6>
               <form>
                 <div className="row">
                   <div className="col-sm-4">
@@ -236,6 +236,50 @@ export function NewUser() {
                     </div>
                   </div>
                 </div>
+
+
+
+                <div className="row">
+                  <div className="col-sm-4">
+                    <div className="mb-3">
+                      <label className="form-label">Centro de Salud</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="HealthCenter"
+                        placeholder="Ingrese el nombre del centro de salud"
+                      />
+                      <div className="text-danger"></div>
+                    </div>
+                  </div>
+                  <div className="col-sm-4">
+                    <div className="mb-3">
+                      <label className="form-label">Departamento</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="Department"
+                        placeholder="Ingrese su departamento"
+                      />
+                      <div className="text-danger"></div>
+                    </div>
+                  </div>
+                  <div className="col-sm-4">
+                    <div className="mb-3">
+                      <label className="form-label">Rol</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="Role"
+                        placeholder="Ingrese su rol"
+                      />
+                      <div className="text-danger"></div>
+                    </div>
+                  </div>
+                </div>
+
+
+
                 <div className="row">
                   <div className="col-sm-6">
                     <div className="mb-3">

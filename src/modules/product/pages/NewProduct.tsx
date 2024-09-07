@@ -131,168 +131,115 @@ const NewProduct: React.FC = () => {
       <nav className="page-breadcrumb">
         <ol className="breadcrumb">
           <li className="breadcrumb-item">
-            <a href="#">Producto</a>
+            <a href="#">ESSALUD</a>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
-            Nuevo Producto
+            Nuevo ESSALUD
           </li>
         </ol>
       </nav>
+
       <div className="row">
-        <div className="col-lg-6 grid-margin stretch-card">
-          <div className="card">
-            <div className="card-body">
-              <h4 className="card-title">Crear un producto</h4>
-              <form id="signupForm" onSubmit={handleSubmit}>
-                <div className="mb-3">
-                  <label htmlFor="name" className="form-label">
-                    Nombre
-                  </label>
-                  <input
-                    id="name"
-                    className="form-control"
-                    name="name"
-                    type="text"
-                    value={formData.name}
-                    onChange={handleChange}
-                  />
-                  {errors.name && (
-                    <div className="text-danger mt-1">{errors.name}</div>
-                  )}
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="description" className="form-label">
-                    Descripción
-                  </label>
-                  <textarea
-                    id="description"
-                    className="form-control"
-                    name="description"
-                    value={formData.description}
-                    onChange={handleChange}
-                  />
-                  {errors.description && (
-                    <div className="text-danger mt-1">{errors.description}</div>
-                  )}
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="nutritionalInfo" className="form-label">
-                    Información nutricional
-                  </label>
-                  <input
-                    id="nutritionalInfo"
-                    className="form-control"
-                    name="nutritionalInfo"
-                    type="text"
-                    value={formData.nutritionalInfo}
-                    onChange={handleChange}
-                  />
-                  {errors.nutritionalInfo && (
-                    <div className="text-danger mt-1">
-                      {errors.nutritionalInfo}
+          <div className="col-md-12 stretch-card">
+            <div className="card">
+              <div className="card-body">
+                <h2 className="card-title">Reguistrar centro de salud</h2>
+                  <form id="signupForm" onSubmit={handleSubmit}>
+                        
+                    <div className="row">
+                      <div className="col-md-6 mb-3">
+                        <div className="mb-3">
+                          <label className="form-label">Nombre de centro de salud</label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            name="HealthCenter"
+                            placeholder="Ingrese el nombre del centro de salud"
+                          />
+                          <div className="text-danger"></div>
+                        </div>
+                      </div>
+                      <div className="col-md-6 mb-3">
+                        <div className="mb-3">
+                          <label className="form-label">Código</label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            name="Department"
+                            placeholder="Ingrese su departamento"
+                          />
+                          <div className="text-danger"></div>
+                        </div>
+                      </div>
                     </div>
-                  )}
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="category" className="form-label">
-                    Categoría
-                  </label>
-                  <select
-                    className="form-select"
-                    name="category"
-                    id="category"
-                    value={formData.category}
-                    onChange={handleChange}
-                  >
-                    <option value="" disabled>
-                      Selecciona una categoría
-                    </option>
-                    <option value="5 estrellas">Excelente</option>
-                    <option value="4 estrellas">Bueno</option>
-                    <option value="2 estrellas">Regular</option>
-                    <option value="0 estrellas">Bajo</option>
-                  </select>
-                  {errors.category && (
-                    <div className="text-danger mt-1">{errors.category}</div>
-                  )}
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-        <div className="col-lg-6 grid-margin stretch-card">
-          <div className="card">
-            <div className="card-body">
-              <form id="signupForm" onSubmit={handleSubmit}>
-                <div className="mb-3">
-                  <label htmlFor="price" className="form-label">
-                    Precio
-                  </label>
-                  <input
-                    id="price"
-                    className="form-control"
-                    name="price"
-                    type="number"
-                    value={formData.price}
-                    onChange={handleChange}
-                  />
-                  {errors.price && (
-                    <div className="text-danger mt-1">{errors.price}</div>
-                  )}
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="stock" className="form-label">
-                    Stock
-                  </label>
-                  <input
-                    id="stock"
-                    className="form-control"
-                    name="stock"
-                    type="number"
-                    value={formData.stock}
-                    onChange={handleChange}
-                  />
-                  {errors.stock && (
-                    <div className="text-danger mt-1">{errors.stock}</div>
-                  )}
-                </div>
-                <div className="mb-3">
-                  <label className="form-label">Agrega una imagen</label>
-                  <div
-                    {...getRootProps({
-                      className: "dropzone",
-                      style: {
-                        border: "2px dashed #ddd",
-                        borderRadius: "4px",
-                        padding: "20px",
-                        cursor: "pointer",
-                      },
-                    })}
-                  >
-                    <input {...getInputProps()} />
-                    {formData.image ? (
-                      <img
-                        src={URL.createObjectURL(formData.image)}
-                        alt="Vista previa"
-                        style={{ maxWidth: "100%", maxHeight: "150px" }}
-                      />
-                    ) : (
-                      <p>Arrastra una imagen o haz clic para seleccionar</p>
-                    )}
-                    {errors.image && (
-                      <div className="text-danger mt-1">{errors.image}</div>
-                    )}
+                    <div className="row">
+                    <div className="col-md-6 mb-3">
+                      <div className="mb-3">
+                        <label className="form-label">Número de Teléfono</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="PhoneNumber"
+                          placeholder="Ingrese su número de teléfono"
+                        />
+                        <div className="text-danger"></div>
+                      </div>
+                    </div>
+                    <div className="col-md-6 mb-3">
+                      <div className="mb-3">
+                        <label className="form-label">Email</label>
+                        <input
+                          type="email"
+                          className="form-control"
+                          name="Email"
+                          placeholder="Ingrese su correo electrónico"
+                        />
+                        <div className="text-danger"></div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <button type="submit" className="btn btn-primary mt-4">
-                  Crear producto
+                  <div className="row">
+                    <div className="col-md-6 mb-3">
+                      <div className="mb-3">
+                        <label className="form-label">Dirección</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="Address"
+                          placeholder="Ingrese su dirección"
+                        />
+                        <div className="text-danger"></div>
+                      </div>
+                    </div>
+                    <div className="col-md-6 mb-3">
+                      <div className="mb-3">
+                        <label className="form-label">Departamento</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="Department"
+                          placeholder="Ingrese su departamento"
+                        />
+                        <div className="text-danger"></div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+                <button
+                        type="button"
+                        className="btn btn-primary submit"
+                      >
+                        Registrar
                 </button>
-              </form>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+
+
+
+
   );
 };
 
