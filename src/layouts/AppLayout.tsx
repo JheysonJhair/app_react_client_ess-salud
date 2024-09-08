@@ -93,12 +93,12 @@ function AppLayout() {
                     <div className="collapse" id="clients">
                       <ul className="nav sub-menu">
                         <li className="nav-item">
-                          <NavLink to="/new-client" className="nav-link">
+                          <NavLink to="/new-volunteer" className="nav-link">
                             Nuevo voluntario
                           </NavLink>
                         </li>
                         <li className="nav-item">
-                          <NavLink to="/clients" className="nav-link">
+                          <NavLink to="/volunteers" className="nav-link">
                             Voluntarios
                           </NavLink>
                         </li>
@@ -121,12 +121,12 @@ function AppLayout() {
                     <div className="collapse" id="products">
                       <ul className="nav sub-menu">
                         <li className="nav-item">
-                          <NavLink to="/new-product" className="nav-link">
+                          <NavLink to="/new-health-center" className="nav-link">
                             Nuevo centro de salud
                           </NavLink>
                         </li>
                         <li className="nav-item">
-                          <NavLink to="/products" className="nav-link">
+                          <NavLink to="/health-centers" className="nav-link">
                             Centros
                           </NavLink>
                         </li>
@@ -170,7 +170,7 @@ function AppLayout() {
                   </li>
                 </>
               )}
-              {user?.Rol === 2 && (
+              {user?.rol === "" && (
                 <>
                   <li className="nav-item">
                     <a
@@ -235,7 +235,7 @@ function AppLayout() {
                   </li>
                 </>
               )}
-              {user?.Rol === 3 && (
+              {user?.rol === "" && (
                 <>
                   <li className="nav-item">
                     <NavLink to="/payment" className="nav-link">

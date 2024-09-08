@@ -119,10 +119,10 @@ export function Users() {
       <nav className="page-breadcrumb">
         <ol className="breadcrumb">
           <li className="breadcrumb-item">
-            <a href="#">Usuario</a>
+            <a href="#">Administrador</a>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
-            Usuarios
+            Administradores
           </li>
         </ol>
       </nav>
@@ -131,7 +131,7 @@ export function Users() {
         <input
           type="text"
           className="form-control"
-          placeholder="Buscar usuario..."
+          placeholder="Buscar administrador..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -200,7 +200,7 @@ export function Users() {
               ))
             ) : (
               <tr>
-                <td colSpan={7} className="text-center">
+                <td colSpan={12} className="text-center">
                   No se encontraron usuarios
                 </td>
               </tr>

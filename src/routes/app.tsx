@@ -4,11 +4,10 @@ import { Navigate } from "react-router-dom";
 import { Users } from "../modules/user/pages/Users";
 import { NewUser } from "../modules/user/pages/NewUser";
 import ProtectedRoute from "../storage/ProtectedRoute";
-import { Clients } from "../modules/client/pages/Clients";
-import { NewClient } from "../modules/client/pages/NewClient";
-import Products from "../modules/product/pages/Products";
-import NewProduct from "../modules/product/pages/NewProduct";
-import Payment from "../modules/payment/pages/Payment";
+import { Volunteers } from "../modules/volunteer/pages/Volunteers";
+import { NewVolunteer } from "../modules/volunteer/pages/NewVolunteer";
+import NewHealthCenter from "../modules/health-center/NewHealthCenter";
+import HealthCenters from "../modules/health-center/HealthCenters";
 
 const appRouter = [
   {
@@ -32,24 +31,20 @@ const appRouter = [
         element: <NewUser />,
       },
       {
-        path: "/clients",
-        element: <Clients />,
+        path: "/volunteers",
+        element: <Volunteers />,
       },
       {
-        path: "/new-client",
-        element: <NewClient />,
+        path: "/new-volunteer",
+        element: <NewVolunteer />,
       },
       {
-        path: "/products",
-        element: <Products />,
+        path: "/health-centers",
+        element: <NewHealthCenter />,
       },
       {
-        path: "/payment",
-        element: <Payment />,
-      },
-      {
-        path: "/new-product",
-        element: <NewProduct />,
+        path: "/new-health-center",
+        element: <HealthCenters />,
       },
       {
         path: "*",

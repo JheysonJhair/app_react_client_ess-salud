@@ -1,31 +1,32 @@
 import { useState, useEffect } from "react";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import Swal from "sweetalert2";
-import { User } from "../../../types/User";
-import {
-  obtenerUsuarios,
-  eliminarUsuario,
-  actualizarUsuario,
-} from "../../../services/Usuario";
-import { Modal, Button, Form } from "react-bootstrap";
 
-export function Clients() {
-  const [usuarios, setUsuarios] = useState<User[]>([]);
+import { Modal, Button, Form } from "react-bootstrap";
+import {
+  actualizarVoluntario,
+  eliminarVoluntario,
+  obtenerVoluntarios,
+} from "../../../services/Voluntario";
+import { Volunteer } from "../../../types/Volunteer";
+
+export function Volunteers() {
+  const [voluntario, setVoluntarios] = useState<Volunteer[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [usuariosPorPagina] = useState(9);
+  const [voluntarioPorPagina] = useState(9);
   const [searchTerm, setSearchTerm] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [editUser, setEditUser] = useState<Partial<User>>({});
+  const [editVolunter, setEditVolunter] = useState<Partial<Volunteer>>({});
 
-  const indexOfLastUsuario = currentPage * usuariosPorPagina;
-  const indexOfFirstUsuario = indexOfLastUsuario - usuariosPorPagina;
-  const currentUsuarios = usuarios.slice(
-    indexOfFirstUsuario,
-    indexOfLastUsuario
+  const indexOfLastVoluntario = currentPage * voluntarioPorPagina;
+  const indexOfFirstVoluntario = indexOfLastVoluntario - voluntarioPorPagina;
+  const currentVoluntario = voluntario.slice(
+    indexOfFirstVoluntario,
+    indexOfLastVoluntario
   );
 
-  const filteredUsuarios = currentUsuarios.filter((usuario) =>
-    Object.values(usuario).some((value) =>
+  const filteredVoluntario = currentVoluntario.filter((voluntario) =>
+    Object.values(voluntario).some((value) =>
       (value ? value.toString().toLowerCase() : "").includes(
         searchTerm.toLowerCase()
       )
@@ -38,9 +39,9 @@ export function Clients() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let data = await obtenerUsuarios();
-        data = data.filter((usuario: User) => usuario.Rol == 0);
-        setUsuarios(data);
+        let data = await obtenerVoluntarios();
+        data = data.filter((voluntario: Volunteer) => voluntario.rol == "user");
+        setVoluntarios(data);
       } catch (error) {
         console.error("Error al obtener usuarios:", error);
       }
@@ -62,12 +63,12 @@ export function Clients() {
       });
 
       if (confirmacion.isConfirmed) {
-        const response = await eliminarUsuario(id);
+        const response = await eliminarVoluntario(id);
         if (response.success) {
-          const updatedUsuarios = usuarios.filter(
-            (usuario) => usuario.IdUser !== id
+          const updatedUsuarios = voluntario.filter(
+            (voluntario) => voluntario.IdUser !== id
           );
-          setUsuarios(updatedUsuarios);
+          setVoluntarios(updatedUsuarios);
           await Swal.fire(
             "¡Eliminado!",
             "El usuario ha sido eliminado.",
@@ -78,32 +79,34 @@ export function Clients() {
         }
       }
     } catch (error) {
-      Swal.fire("Error", "Hubo un error al eliminar el usuario", "error");
+      Swal.fire("Error", "Hubo un error al eliminar el voluntario", "error");
     }
   };
 
-  const handleOpenModal = (usuario: User) => {
-    setEditUser(usuario);
+  const handleOpenModal = (voluntario: Volunteer) => {
+    setEditVolunter(voluntario);
     setShowModal(true);
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
-    setEditUser({});
+    setEditVolunter({});
   };
 
   //---------------------------------------------------------------- UPDATE CLIENT
-  const handleUpdateUser = async (e: React.FormEvent) => {
+  const handleUpdateVolunteer= async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await actualizarUsuario({
-        ...editUser,
-        Rol: 0,
+      const response = await actualizarVoluntario({
+        ...editVolunter,
+        rol: "",
       });
       if (response.success) {
-        setUsuarios(
-          usuarios.map((user) =>
-            user.IdUser === editUser.IdUser ? { ...user, ...editUser } : user
+        setVoluntarios(
+          voluntario.map((voluntario) =>
+            voluntario.IdUser === editVolunter.IdUser
+              ? { ...voluntario, ...editVolunter }
+              : voluntario
           )
         );
         await Swal.fire("¡Actualizado!", response.msg, "success");
@@ -133,7 +136,7 @@ export function Clients() {
         <input
           type="text"
           className="form-control"
-          placeholder="Buscar cliente..."
+          placeholder="Buscar voluntario..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -149,49 +152,49 @@ export function Clients() {
             <tr>
               <th>Nombres y apellidos</th>
               <th>DNI</th>
-              <th>Teléfono</th>
               <th>Dirección</th>
               <th>Email</th>
               <th>Cumpleaños</th>
 
-
               <th>C. Salud</th>
               <th>Departamento</th>
               <th>Rol</th>
-
 
               <th>Contraseña</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            {filteredUsuarios.length > 0 ? (
-              filteredUsuarios.map((usuario, index) => (
+            {filteredVoluntario.length > 0 ? (
+              filteredVoluntario.map((voluntario, index) => (
                 <tr key={index}>
-                  <td>{usuario.FirstName + " " + usuario.LastName}</td>
-                  <td>{usuario.Dni}</td>
-                  <td>{usuario.Phone}</td>
-                  <td>{usuario.Address}</td>
-                  <td>{usuario.Mail}</td>
-                  <td>{usuario.BirthDate}</td>
-
+                  <td>{voluntario.nombresCompletos}</td>
+                  <td>{voluntario.dni}</td>
+                  <td>{voluntario.direccion}</td>
+                  <td>{voluntario.email}</td>
+                  <td>{voluntario.cumpleanos}</td>
+                  <td>{voluntario.idCentroSalud}</td>
+                  <td>{voluntario.departamento}</td>
+                  <td>{voluntario.rol}</td>
+                  <td>{voluntario.password}</td>
 
                   <td>{}</td>
                   <td>{}</td>
                   <td>{}</td>
 
-                  
-                  <td>{usuario.Password}</td>
+                  <td>{voluntario.password}</td>
                   <td>
                     <button
                       className="btn btn-warning btn-sm me-2"
-                      onClick={() => handleOpenModal(usuario)}
+                      onClick={() => handleOpenModal(voluntario)}
                     >
                       <FaEdit />
                     </button>
                     <button
                       className="btn btn-danger btn-sm"
-                      onClick={() => handleEliminarUsuario(usuario.IdUser || 0)}
+                      onClick={() =>
+                        handleEliminarUsuario(voluntario.IdUser || 0)
+                      }
                     >
                       <FaTrash />
                     </button>
@@ -200,8 +203,8 @@ export function Clients() {
               ))
             ) : (
               <tr>
-                <td colSpan={7} className="text-center">
-                  No se encontraron usuarios
+                <td colSpan={12} className="text-center">
+                  No se encontraron voluntarios
                 </td>
               </tr>
             )}
@@ -211,7 +214,7 @@ export function Clients() {
 
       <ul className="pagination justify-content-center">
         {Array.from(
-          { length: Math.ceil(usuarios.length / usuariosPorPagina) },
+          { length: Math.ceil(voluntario.length / voluntarioPorPagina) },
           (_, index) => (
             <li key={index} className="page-item">
               <button onClick={() => paginate(index + 1)} className="page-link">
@@ -227,30 +230,20 @@ export function Clients() {
           <Modal.Title>Actualizar Usuario</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleUpdateUser}>
+          <Form onSubmit={handleUpdateVolunteer}>
             <div className="row">
-              <div className="col-md-6 mb-3">
+              <div className="col-md-12 mb-3">
                 <Form.Group controlId="formFirstName">
                   <Form.Label>Nombre</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Nombre"
-                    value={editUser.FirstName || ""}
+                    placeholder="Nombres y apelldios"
+                    value={editVolunter.nombresCompletos || ""}
                     onChange={(e) =>
-                      setEditUser({ ...editUser, FirstName: e.target.value })
-                    }
-                  />
-                </Form.Group>
-              </div>
-              <div className="col-md-6 mb-3">
-                <Form.Group controlId="formLastName">
-                  <Form.Label>Apellido</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Apellido"
-                    value={editUser.LastName || ""}
-                    onChange={(e) =>
-                      setEditUser({ ...editUser, LastName: e.target.value })
+                      setEditVolunter({
+                        ...editVolunter,
+                        nombresCompletos: e.target.value,
+                      })
                     }
                   />
                 </Form.Group>
@@ -263,9 +256,9 @@ export function Clients() {
                   <Form.Control
                     type="text"
                     placeholder="DNI"
-                    value={editUser.Dni || ""}
+                    value={editVolunter.dni || ""}
                     onChange={(e) =>
-                      setEditUser({ ...editUser, Dni: e.target.value })
+                      setEditVolunter({ ...editVolunter, dni: e.target.value })
                     }
                   />
                 </Form.Group>
@@ -276,9 +269,9 @@ export function Clients() {
                   <Form.Control
                     type="text"
                     placeholder="Dirección"
-                    value={editUser.Address || ""}
+                    value={editVolunter.direccion || ""}
                     onChange={(e) =>
-                      setEditUser({ ...editUser, Address: e.target.value })
+                      setEditVolunter({ ...editVolunter, direccion: e.target.value })
                     }
                   />
                 </Form.Group>
@@ -286,36 +279,20 @@ export function Clients() {
             </div>
             <div className="row">
               <div className="col-md-6 mb-3">
-                <Form.Group controlId="formPhone">
-                  <Form.Label>Teléfono</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Teléfono"
-                    value={editUser.Phone || ""}
-                    onChange={(e) =>
-                      setEditUser({ ...editUser, Phone: e.target.value })
-                    }
-                  />
-                </Form.Group>
-              </div>
-              <div className="col-md-6 mb-3">
                 <Form.Group controlId="formMail">
                   <Form.Label>Email</Form.Label>
                   <Form.Control
                     type="email"
                     placeholder="Email"
-                    value={editUser.Mail || ""}
+                    value={editVolunter.email || ""}
                     onChange={(e) =>
-                      setEditUser({ ...editUser, Mail: e.target.value })
+                      setEditVolunter({ ...editVolunter, email: e.target.value })
                     }
                   />
                 </Form.Group>
               </div>
             </div>
 
-            
-
-            
             <div className="row">
               <div className="col-md-6 mb-3">
                 <Form.Group controlId="formPassword">
@@ -323,9 +300,9 @@ export function Clients() {
                   <Form.Control
                     type="password"
                     placeholder="Contraseña"
-                    value={editUser.Password || ""}
+                    value={editVolunter.password || ""}
                     onChange={(e) =>
-                      setEditUser({ ...editUser, Password: e.target.value })
+                      setEditVolunter({ ...editVolunter, password: e.target.value })
                     }
                   />
                 </Form.Group>
@@ -335,9 +312,9 @@ export function Clients() {
                   <Form.Label>Cumpleaños</Form.Label>
                   <Form.Control
                     type="date"
-                    value={editUser.BirthDate || ""}
+                    value={editVolunter.cumpleanos || ""}
                     onChange={(e) =>
-                      setEditUser({ ...editUser, BirthDate: e.target.value })
+                      setEditVolunter({ ...editVolunter, cumpleanos: e.target.value })
                     }
                   />
                 </Form.Group>
