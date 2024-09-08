@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { login } from "../../../services/Login";
 
@@ -23,10 +23,10 @@ export default function Login() {
     e.preventDefault();
     try {
       const response = await login({
-        UserRequest: username,
-        Password: password,
+        email: username,
+        password: password,
       });
-      if (response.success && response.data.Rol === 1) {
+      if (response.success) {
         localStorage.setItem("user", JSON.stringify(response.data));
         localStorage.setItem("isAuthenticated", "true");
         Swal.fire({
@@ -40,7 +40,7 @@ export default function Login() {
       } else {
         Swal.fire({
           title: "Error!",
-          text: "No tiene acceso!",
+          text: response.msg,
           icon: "error",
           confirmButtonText: "Aceptar",
         });
@@ -123,10 +123,25 @@ export default function Login() {
                           <button
                             type="submit"
                             className="btn me-2 mb-2 mb-md-0"
-                            style={{ backgroundColor: "#e83184", width:"150px" , color:"#ffffff"}}
+                            style={{
+                              backgroundColor: "#e83184",
+                              width: "150px",
+                              color: "#ffffff",
+                            }}
                           >
                             Ingresar
                           </button>
+                          <NavLink
+                            to={"/register"}
+                            className="btn me-2 mb-2 mb-md-0"
+                            style={{
+                              border: "1px solid #e83184",
+                              width: "150px",
+                              color: "#e83184",
+                            }}
+                          >
+                            Registrarse
+                          </NavLink>
                         </div>
                       </form>
                     </div>

@@ -1,11 +1,11 @@
 import { User, ApiResponse } from "../types/User";
 
-const API_URL = "https://bkmaferyogurt-production.up.railway.app/api";
+const API_URL = "project-essalud-production.up.railway.app/api";
 
 //---------------------------------------------------------------- GET USER
 export async function obtenerUsuarios(): Promise<User[]> {
   try {
-    const response = await fetch(`${API_URL}/user`);
+    const response = await fetch(`${API_URL}/usuario/getAll`);
     if (!response.ok) {
       throw new Error("API: Error al obtener los datos de usuarios");
     }
@@ -25,7 +25,7 @@ export async function crearUsuario(
   usuario: Partial<User>
 ): Promise<{ msg: string; success: boolean }> {
   try {
-    const response = await fetch(`${API_URL}/user/insert`, {
+    const response = await fetch(`${API_URL}/usuario/insert`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +48,7 @@ export async function actualizarUsuario(
   usuario: Partial<User>
 ): Promise<{ msg: string; success: boolean }> {
   try {
-    const url = `${API_URL}/user/update`;
+    const url = `${API_URL}/usuario/update`;
     const response = await fetch(url, {
       method: "PUT",
       headers: {
@@ -72,7 +72,7 @@ export async function eliminarUsuario(
   usuarioId: number
 ): Promise<{ msg: string; success: boolean }> {
   try {
-    const url = `${API_URL}/user/Delete/${usuarioId}`;
+    const url = `${API_URL}/usuario/delete/${usuarioId}`;
     const response = await fetch(url, {
       method: "DELETE",
     });

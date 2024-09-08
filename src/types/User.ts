@@ -1,32 +1,32 @@
 export interface User {
   IdUser?: number;
-  FirstName: string;
-  LastName: string;
-  Dni: string;
-  Address: string;
-  Password: string;
-  Phone: string;
-  Mail: string;
-  Rol?: number;
-  BirthDate?:string;
+  nombresCompletos: string;
+  dni: string;
+  direccion: string;
+  email: string;
+  cumpleanos: string;
+  password: string;
+  rol: string;
+  departamento: number;
+  idCentroSalud?: number;
 }
 
 export interface ErrorMessages {
   IdUser?: number;
-  FirstName: string;
-  LastName: string;
-  Dni: string;
-  Address: string;
-  Password: string;
-  Phone: string;
-  Mail: string;
-  Rol?: number;
-  BirthDate?:string;
+  nombresCompletos: string;
+  dni: string;
+  direccion: string;
+  email: string;
+  cumpleanos: string;
+  password: string;
+  rol: string;
+  departamento: number;
+  idCentroSalud?: number;
 }
 
 export interface Login {
-  UserRequest: string;
-  Password: string;
+  email: string;
+  password: string;
 }
 
 export interface AuthContextType {

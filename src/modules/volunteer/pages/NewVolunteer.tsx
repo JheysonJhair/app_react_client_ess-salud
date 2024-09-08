@@ -9,11 +9,11 @@ import {
   validatePhoneNumber,
 } from "../../../utils/validations";
 import { crearUsuario } from "../../../services/Usuario";
-import { Volunteer } from "../../../types/Volunteer";
+import { User } from "../../../types/User";
 
 export function NewVolunteer() {
   const navigate = useNavigate();
-  const [nuevoUsuario, setNuevoVoluntario] = useState<Partial<Volunteer>>({
+  const [nuevoUsuario, setNuevoVoluntario] = useState<Partial<User>>({
     rol: "",
   });
 
@@ -66,7 +66,7 @@ export function NewVolunteer() {
   };
 
   //---------------------------------------------------------------- POST USER
-  type UsuarioKey = keyof Partial<Volunteer>;
+  type UsuarioKey = keyof Partial<User>;
   const handleRegistrarUsuario = async () => {
     try {
       const requiredFields: UsuarioKey[] = [

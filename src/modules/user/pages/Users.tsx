@@ -7,7 +7,7 @@ import {
   eliminarUsuario,
   actualizarUsuario,
 } from "../../../services/Usuario";
-import { Modal, Button, Form } from "react-bootstrap"; 
+import { Modal, Button, Form } from "react-bootstrap";
 
 export function Users() {
   const [usuarios, setUsuarios] = useState<User[]>([]);
@@ -38,7 +38,7 @@ export function Users() {
     const fetchData = async () => {
       try {
         let data = await obtenerUsuarios();
-        data = data.filter((usuario: User) => usuario.Rol == 1);
+        data = data.filter((usuario: User) => usuario.rol == "user");
         setUsuarios(data);
       } catch (error) {
         console.error("Error al obtener usuarios:", error);
@@ -96,7 +96,7 @@ export function Users() {
     try {
       const response = await actualizarUsuario({
         ...editUser,
-        Rol: 1,
+        rol: "",
       });
       if (response.success) {
         setUsuarios(
@@ -119,10 +119,10 @@ export function Users() {
       <nav className="page-breadcrumb">
         <ol className="breadcrumb">
           <li className="breadcrumb-item">
-            <a href="#">Administrador</a>
+            <a href="#">Usuario</a>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
-            Administradores
+            Lista de usuarios
           </li>
         </ol>
       </nav>
@@ -131,7 +131,7 @@ export function Users() {
         <input
           type="text"
           className="form-control"
-          placeholder="Buscar administrador..."
+          placeholder="Buscar usuario..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -145,18 +145,15 @@ export function Users() {
         >
           <thead>
             <tr>
-            <th>Nombres y apellidos</th>
+              <th>Nombres y apellidos</th>
               <th>DNI</th>
-              <th>Teléfono</th>
               <th>Dirección</th>
               <th>Email</th>
               <th>Cumpleaños</th>
 
-
               <th>C. Salud</th>
               <th>Departamento</th>
               <th>Rol</th>
-
 
               <th>Contraseña</th>
               <th>Acciones</th>
@@ -166,22 +163,21 @@ export function Users() {
             {filteredUsuarios.length > 0 ? (
               filteredUsuarios.map((usuario, index) => (
                 <tr key={index}>
-                  <td>{usuario.FirstName + " " + usuario.LastName}</td>
-                  <td>{usuario.Dni}</td>
-                  <td>{usuario.Phone}</td>
-                  <td>{usuario.Address}</td>
-                  <td>{usuario.Mail}</td>
-                  <td>{usuario.BirthDate}</td>
-
+                  <td>{usuario.nombresCompletos}</td>
+                  <td>{usuario.dni}</td>
+                  <td>{usuario.direccion}</td>
+                  <td>{usuario.email}</td>
+                  <td>{usuario.cumpleanos}</td>
+                  <td>{usuario.idCentroSalud}</td>
+                  <td>{usuario.departamento}</td>
+                  <td>{usuario.rol}</td>
+                  <td>{usuario.password}</td>
 
                   <td>{}</td>
                   <td>{}</td>
                   <td>{}</td>
 
-
-                  <td>{usuario.Password}</td>
-
-                  
+                  <td>{usuario.password}</td>
                   <td>
                     <button
                       className="btn btn-warning btn-sm me-2"
@@ -229,28 +225,18 @@ export function Users() {
         <Modal.Body>
           <Form onSubmit={handleUpdateUser}>
             <div className="row">
-              <div className="col-md-6 mb-3">
+              <div className="col-md-12 mb-3">
                 <Form.Group controlId="formFirstName">
                   <Form.Label>Nombre</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Nombre"
-                    value={editUser.FirstName || ""}
+                    placeholder="Nombres y apelldios"
+                    value={editUser.nombresCompletos || ""}
                     onChange={(e) =>
-                      setEditUser({ ...editUser, FirstName: e.target.value })
-                    }
-                  />
-                </Form.Group>
-              </div>
-              <div className="col-md-6 mb-3">
-                <Form.Group controlId="formLastName">
-                  <Form.Label>Apellido</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Apellido"
-                    value={editUser.LastName || ""}
-                    onChange={(e) =>
-                      setEditUser({ ...editUser, LastName: e.target.value })
+                      setEditUser({
+                        ...editUser,
+                        nombresCompletos: e.target.value,
+                      })
                     }
                   />
                 </Form.Group>
@@ -263,9 +249,9 @@ export function Users() {
                   <Form.Control
                     type="text"
                     placeholder="DNI"
-                    value={editUser.Dni || ""}
+                    value={editUser.dni || ""}
                     onChange={(e) =>
-                      setEditUser({ ...editUser, Dni: e.target.value })
+                      setEditUser({ ...editUser, dni: e.target.value })
                     }
                   />
                 </Form.Group>
@@ -276,9 +262,12 @@ export function Users() {
                   <Form.Control
                     type="text"
                     placeholder="Dirección"
-                    value={editUser.Address || ""}
+                    value={editUser.direccion || ""}
                     onChange={(e) =>
-                      setEditUser({ ...editUser, Address: e.target.value })
+                      setEditUser({
+                        ...editUser,
+                        direccion: e.target.value,
+                      })
                     }
                   />
                 </Form.Group>
@@ -286,32 +275,23 @@ export function Users() {
             </div>
             <div className="row">
               <div className="col-md-6 mb-3">
-                <Form.Group controlId="formPhone">
-                  <Form.Label>Teléfono</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Teléfono"
-                    value={editUser.Phone || ""}
-                    onChange={(e) =>
-                      setEditUser({ ...editUser, Phone: e.target.value })
-                    }
-                  />
-                </Form.Group>
-              </div>
-              <div className="col-md-6 mb-3">
                 <Form.Group controlId="formMail">
                   <Form.Label>Email</Form.Label>
                   <Form.Control
                     type="email"
                     placeholder="Email"
-                    value={editUser.Mail || ""}
+                    value={editUser.email || ""}
                     onChange={(e) =>
-                      setEditUser({ ...editUser, Mail: e.target.value })
+                      setEditUser({
+                        ...editUser,
+                        email: e.target.value,
+                      })
                     }
                   />
                 </Form.Group>
               </div>
             </div>
+
             <div className="row">
               <div className="col-md-6 mb-3">
                 <Form.Group controlId="formPassword">
@@ -319,9 +299,12 @@ export function Users() {
                   <Form.Control
                     type="password"
                     placeholder="Contraseña"
-                    value={editUser.Password || ""}
+                    value={editUser.password || ""}
                     onChange={(e) =>
-                      setEditUser({ ...editUser, Password: e.target.value })
+                      setEditUser({
+                        ...editUser,
+                        password: e.target.value,
+                      })
                     }
                   />
                 </Form.Group>
@@ -331,9 +314,12 @@ export function Users() {
                   <Form.Label>Cumpleaños</Form.Label>
                   <Form.Control
                     type="date"
-                    value={editUser.BirthDate || ""}
+                    value={editUser.cumpleanos || ""}
                     onChange={(e) =>
-                      setEditUser({ ...editUser, BirthDate: e.target.value })
+                      setEditUser({
+                        ...editUser,
+                        cumpleanos: e.target.value,
+                      })
                     }
                   />
                 </Form.Group>

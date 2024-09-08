@@ -14,19 +14,19 @@ import { crearUsuario } from "../../../services/Usuario";
 export function NewUser() {
   const navigate = useNavigate();
   const [nuevoUsuario, setNuevoUsuario] = useState<Partial<User>>({
-    Rol: 1, 
+    rol: "",
   });
 
   const [errorMessages, setErrorMessages] = useState({
-    FirstName: "",
-    LastName: "",
-    Dni: "",
-    Address: "",
-    Phone: "",
-    Mail: "",
-    Password: "",
-    BirthDate: "",
-    Rol: "",
+    nombresCompletos: "",
+    dni: "",
+    direccion: "",
+    email: "",
+    cumpleanos: "",
+    password: "",
+    rol: "",
+    departamento: "",
+    idCentroSalud: "",
   });
 
   //---------------------------------------------------------------- INPUT CHANGE
@@ -70,14 +70,15 @@ export function NewUser() {
   const handleRegistrarUsuario = async () => {
     try {
       const requiredFields: UsuarioKey[] = [
-        "FirstName",
-        "LastName",
-        "Dni",
-        "Address",
-        "Phone",
-        "Mail",
-        "Password",
-        "BirthDate",
+        "nombresCompletos",
+        "dni",
+        "direccion",
+        "email",
+        "cumpleanos",
+        "password",
+        "rol",
+        "departamento",
+        "idCentroSalud",
       ];
 
       const missingFields = requiredFields.filter(
@@ -94,7 +95,7 @@ export function NewUser() {
       }
 
       let response: { msg: string; success: boolean };
-      console.log(nuevoUsuario)
+      console.log(nuevoUsuario);
       response = await crearUsuario(nuevoUsuario);
       if (response.success) {
         Swal.fire({
@@ -128,10 +129,10 @@ export function NewUser() {
       <nav className="page-breadcrumb">
         <ol className="breadcrumb">
           <li className="breadcrumb-item">
-            <a href="#">Administrador</a>
+            <a href="#">Usuarios</a>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
-            Crear nuevo administrador
+            Crear nuevo usuario
           </li>
         </ol>
       </nav>
@@ -140,36 +141,23 @@ export function NewUser() {
         <div className="col-md-12 stretch-card">
           <div className="card">
             <div className="card-body">
-              <h6 className="card-title">Registrar Administrador</h6>
+              <h6 className="card-title">Registrar usuario</h6>
               <form>
                 <div className="row">
-                  <div className="col-sm-4">
+                  <div className="col-sm-8">
                     <div className="mb-3">
-                      <label className="form-label">Nombres</label>
+                      <label className="form-label">Nombres y apellidos</label>
                       <input
                         type="text"
                         className="form-control"
-                        name="FirstName"
-                        placeholder="Ingrese sus nombres"
+                        name="nombresCompletos"
+                        placeholder="Ingrese sus nombres y apellidos"
                         onChange={handleInputChange}
                       />
-                      {errorMessages.FirstName && (
-                        <div className="text-danger">{errorMessages.FirstName}</div>
-                      )}
-                    </div>
-                  </div>
-                  <div className="col-sm-4">
-                    <div className="mb-3">
-                      <label className="form-label">Apellidos</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="LastName"
-                        placeholder="Ingrese sus apellidos"
-                        onChange={handleInputChange}
-                      />
-                      {errorMessages.LastName && (
-                        <div className="text-danger">{errorMessages.LastName}</div>
+                      {errorMessages.nombresCompletos && (
+                        <div className="text-danger">
+                          {errorMessages.nombresCompletos}
+                        </div>
                       )}
                     </div>
                   </div>
@@ -179,16 +167,17 @@ export function NewUser() {
                       <input
                         type="text"
                         className="form-control"
-                        name="Dni"
+                        name="dni"
                         placeholder="Ingrese su dni"
                         onChange={handleInputChange}
                       />
-                      {errorMessages.Dni && (
-                        <div className="text-danger">{errorMessages.Dni}</div>
+                      {errorMessages.dni && (
+                        <div className="text-danger">{errorMessages.dni}</div>
                       )}
                     </div>
                   </div>
                 </div>
+
                 <div className="row">
                   <div className="col-sm-4">
                     <div className="mb-3">
@@ -196,48 +185,18 @@ export function NewUser() {
                       <input
                         type="text"
                         className="form-control"
-                        name="Address"
+                        name="direccion"
                         placeholder="Ingrese su direccion"
                         onChange={handleInputChange}
                       />
-                      {errorMessages.Address && (
-                        <div className="text-danger">{errorMessages.Address}</div>
-                      )}
-                    </div>
-                  </div>
-                  <div className="col-sm-4">
-                    <div className="mb-3">
-                      <label className="form-label">Telefono</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="Phone"
-                        placeholder="Ingrese su telefono"
-                        onChange={handleInputChange}
-                      />
-                      {errorMessages.Phone && (
-                        <div className="text-danger">{errorMessages.Phone}</div>
-                      )}
-                    </div>
-                  </div>
-                  <div className="col-sm-4">
-                    <div className="mb-3">
-                      <label className="form-label">Correo</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="Mail"
-                        placeholder="Ingrese su correo"
-                        onChange={handleInputChange}
-                      />
-                      {errorMessages.Mail && (
-                        <div className="text-danger">{errorMessages.Mail}</div>
+                      {errorMessages.direccion && (
+                        <div className="text-danger">
+                          {errorMessages.direccion}
+                        </div>
                       )}
                     </div>
                   </div>
                 </div>
-
-
 
                 <div className="row">
                   <div className="col-sm-4">
@@ -246,10 +205,15 @@ export function NewUser() {
                       <input
                         type="text"
                         className="form-control"
-                        name="HealthCenter"
+                        name="idCentroSalud"
                         placeholder="Ingrese el nombre del centro de salud"
+                        onChange={handleInputChange}
                       />
-                      <div className="text-danger"></div>
+                      {errorMessages.idCentroSalud && (
+                        <div className="text-danger">
+                          {errorMessages.idCentroSalud}
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="col-sm-4">
@@ -258,10 +222,15 @@ export function NewUser() {
                       <input
                         type="text"
                         className="form-control"
-                        name="Department"
+                        name="departamento"
                         placeholder="Ingrese su departamento"
+                        onChange={handleInputChange}
                       />
-                      <div className="text-danger"></div>
+                      {errorMessages.departamento && (
+                        <div className="text-danger">
+                          {errorMessages.departamento}
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="col-sm-4">
@@ -277,8 +246,6 @@ export function NewUser() {
                     </div>
                   </div>
                 </div>
-
-
 
                 <div className="row">
                   <div className="col-sm-6">
@@ -298,13 +265,15 @@ export function NewUser() {
                       <input
                         type="password"
                         className="form-control"
-                        name="Password"
+                        name="password"
                         autoComplete="off"
                         placeholder="Contraseña"
                         onChange={handleInputChange}
                       />
-                      {errorMessages.Password && (
-                        <div className="text-danger">{errorMessages.Password}</div>
+                      {errorMessages.password && (
+                        <div className="text-danger">
+                          {errorMessages.password}
+                        </div>
                       )}
                     </div>
                   </div>

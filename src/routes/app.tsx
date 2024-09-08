@@ -6,8 +6,9 @@ import { NewUser } from "../modules/user/pages/NewUser";
 import ProtectedRoute from "../storage/ProtectedRoute";
 import { Volunteers } from "../modules/volunteer/pages/Volunteers";
 import { NewVolunteer } from "../modules/volunteer/pages/NewVolunteer";
-import NewHealthCenter from "../modules/health-center/NewHealthCenter";
-import HealthCenters from "../modules/health-center/HealthCenters";
+
+import { NewHealthCenter } from "../modules/health-center/NewHealthCenter";
+import { HealthCenters } from "../modules/health-center/HealthCenters";
 
 const appRouter = [
   {
@@ -40,11 +41,11 @@ const appRouter = [
       },
       {
         path: "/health-centers",
-        element: <NewHealthCenter />,
+        element: <HealthCenters />,
       },
       {
         path: "/new-health-center",
-        element: <HealthCenters />,
+        element: <NewHealthCenter />,
       },
       {
         path: "*",

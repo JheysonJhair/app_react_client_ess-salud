@@ -3,20 +3,21 @@ import { FaTrash, FaEdit } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 import { Modal, Button, Form } from "react-bootstrap";
+
+import { User } from "../../../types/User";
 import {
-  actualizarVoluntario,
-  eliminarVoluntario,
-  obtenerVoluntarios,
-} from "../../../services/Voluntario";
-import { Volunteer } from "../../../types/Volunteer";
+  actualizarUsuario,
+  eliminarUsuario,
+  obtenerUsuarios,
+} from "../../../services/Usuario";
 
 export function Volunteers() {
-  const [voluntario, setVoluntarios] = useState<Volunteer[]>([]);
+  const [voluntario, setVoluntarios] = useState<User[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [voluntarioPorPagina] = useState(9);
   const [searchTerm, setSearchTerm] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [editVolunter, setEditVolunter] = useState<Partial<Volunteer>>({});
+  const [editVolunter, setEditVolunter] = useState<Partial<User>>({});
 
   const indexOfLastVoluntario = currentPage * voluntarioPorPagina;
   const indexOfFirstVoluntario = indexOfLastVoluntario - voluntarioPorPagina;
@@ -39,8 +40,8 @@ export function Volunteers() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let data = await obtenerVoluntarios();
-        data = data.filter((voluntario: Volunteer) => voluntario.rol == "user");
+        let data = await obtenerUsuarios();
+        data = data.filter((voluntario: User) => voluntario.rol == "user");
         setVoluntarios(data);
       } catch (error) {
         console.error("Error al obtener usuarios:", error);
@@ -63,7 +64,7 @@ export function Volunteers() {
       });
 
       if (confirmacion.isConfirmed) {
-        const response = await eliminarVoluntario(id);
+        const response = await eliminarUsuario(id);
         if (response.success) {
           const updatedUsuarios = voluntario.filter(
             (voluntario) => voluntario.IdUser !== id
@@ -83,7 +84,7 @@ export function Volunteers() {
     }
   };
 
-  const handleOpenModal = (voluntario: Volunteer) => {
+  const handleOpenModal = (voluntario: User) => {
     setEditVolunter(voluntario);
     setShowModal(true);
   };
@@ -94,10 +95,10 @@ export function Volunteers() {
   };
 
   //---------------------------------------------------------------- UPDATE CLIENT
-  const handleUpdateVolunteer= async (e: React.FormEvent) => {
+  const handleUpdateVolunteer = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await actualizarVoluntario({
+      const response = await actualizarUsuario({
         ...editVolunter,
         rol: "",
       });
@@ -124,10 +125,10 @@ export function Volunteers() {
       <nav className="page-breadcrumb">
         <ol className="breadcrumb">
           <li className="breadcrumb-item">
-            <a href="#">Usuario</a>
+            <a href="#">Voluntarios</a>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
-            Lista deVoluntarios
+            Lista de Voluntarios
           </li>
         </ol>
       </nav>
@@ -271,7 +272,10 @@ export function Volunteers() {
                     placeholder="Dirección"
                     value={editVolunter.direccion || ""}
                     onChange={(e) =>
-                      setEditVolunter({ ...editVolunter, direccion: e.target.value })
+                      setEditVolunter({
+                        ...editVolunter,
+                        direccion: e.target.value,
+                      })
                     }
                   />
                 </Form.Group>
@@ -286,7 +290,10 @@ export function Volunteers() {
                     placeholder="Email"
                     value={editVolunter.email || ""}
                     onChange={(e) =>
-                      setEditVolunter({ ...editVolunter, email: e.target.value })
+                      setEditVolunter({
+                        ...editVolunter,
+                        email: e.target.value,
+                      })
                     }
                   />
                 </Form.Group>
@@ -302,7 +309,10 @@ export function Volunteers() {
                     placeholder="Contraseña"
                     value={editVolunter.password || ""}
                     onChange={(e) =>
-                      setEditVolunter({ ...editVolunter, password: e.target.value })
+                      setEditVolunter({
+                        ...editVolunter,
+                        password: e.target.value,
+                      })
                     }
                   />
                 </Form.Group>
@@ -314,7 +324,10 @@ export function Volunteers() {
                     type="date"
                     value={editVolunter.cumpleanos || ""}
                     onChange={(e) =>
-                      setEditVolunter({ ...editVolunter, cumpleanos: e.target.value })
+                      setEditVolunter({
+                        ...editVolunter,
+                        cumpleanos: e.target.value,
+                      })
                     }
                   />
                 </Form.Group>

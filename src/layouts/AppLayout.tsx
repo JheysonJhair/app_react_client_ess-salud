@@ -75,7 +75,7 @@ function AppLayout() {
           <div className="sidebar-body" style={{ backgroundColor: "#9eb3dc" }}>
             <ul className="nav">
               <li className="nav-item nav-category">Menú</li>
-              {user?.Rol === 1 && (
+              {user?.rol === "" && (
                 <>
                   <li className="nav-item">
                     <a
