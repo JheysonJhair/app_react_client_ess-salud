@@ -149,12 +149,12 @@ function AppLayout() {
                     <div className="collapse" id="users">
                       <ul className="nav sub-menu">
                         <li className="nav-item">
-                          <NavLink to="/new-user" className="nav-link">
+                          <NavLink to="/new-volunteer" className="nav-link">
                             Nuevo administrador
                           </NavLink>
                         </li>
                         <li className="nav-item">
-                          <NavLink to="/users" className="nav-link">
+                          <NavLink to="/volunteers" className="nav-link">
                             Administrador
                           </NavLink>
                         </li>
