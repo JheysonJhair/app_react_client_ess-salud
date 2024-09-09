@@ -6,7 +6,6 @@ import { NewUser } from "../modules/user/pages/NewUser";
 import ProtectedRoute from "../storage/ProtectedRoute";
 import { Volunteers } from "../modules/volunteer/pages/Volunteers";
 import { NewVolunteer } from "../modules/volunteer/pages/NewVolunteer";
-
 import { NewHealthCenter } from "../modules/health-center/NewHealthCenter";
 import { HealthCenters } from "../modules/health-center/HealthCenters";
 import Reports from "../modules/reports/Reports";
@@ -14,6 +13,11 @@ import ShiftAvailability from "../modules/shiftAvailability/shiftAvailability";
 import Evaluation from "../modules/evaluation/evaluation";
 import Trainings from "../modules/trainings/trainings";
 import ReportsAdmin from "../modules/reportsAdmin/ReportsAdmin";
+import Attendance from "../modules/attendance/attendance";
+import Profile from "../modules/profile/Profile";
+import AvailabilityUser from "../modules/shiftAvailability/shiftAvailabilityUser";
+import TradinUser from "../modules/trainings/trainigsUser";
+
 
 const appRouter = [
   {
@@ -80,7 +84,25 @@ const appRouter = [
         element: <ReportsAdmin />,
       },
 
+      
 
+
+      {
+        path: "/Attendance",
+        element: <Attendance />,
+      },
+      {
+        path: "/Profile",
+        element: <Profile />,
+      },
+      {
+        path: "/AvailabilityUser",
+        element: <AvailabilityUser />,
+      },
+      {
+        path: "/TradinUser",
+        element: <TradinUser />,
+      },
 
 
 

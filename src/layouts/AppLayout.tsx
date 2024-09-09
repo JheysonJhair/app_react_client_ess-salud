@@ -232,31 +232,25 @@ function AppLayout() {
               {user?.rol === 0 && (
                 <>
                   <li className="nav-item">
-                    <NavLink to="/payment" className="nav-link">
+                    <NavLink to="/profile" className="nav-link">
                       <i className="link-icon" data-feather="user"></i>
                       <span className="link-title">Mi perfil</span>
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink to="/payment" className="nav-link">
+                    <NavLink to="/AvailabilityUser" className="nav-link">
                       <i className="link-icon" data-feather="calendar"></i>
-                      <span className="link-title">Turno</span>
+                      <span className="link-title">Turno y disponibilidad</span>
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink to="/payment" className="nav-link">
+                    <NavLink to="/TradinUser" className="nav-link">
                       <i className="link-icon" data-feather="book"></i>
                       <span className="link-title">Capacitacion</span>
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink to="/payment" className="nav-link">
-                      <i className="link-icon" data-feather="phone"></i>
-                      <span className="link-title">Contacto de emergencia</span>
-                    </NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink to="/payment" className="nav-link">
+                    <NavLink to="/Attendance" className="nav-link">
                       <i className="link-icon" data-feather="info"></i>
                       <span className="link-title">Asistencia</span>
                     </NavLink>
