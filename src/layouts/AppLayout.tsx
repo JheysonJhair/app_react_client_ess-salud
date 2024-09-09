@@ -163,7 +163,7 @@ function AppLayout() {
                   </li>
                   <li className="nav-item nav-category">Datos</li>
                   <li className="nav-item">
-                    <NavLink to="/payment" className="nav-link">
+                    <NavLink to="/reports" className="nav-link">
                       <i className="link-icon" data-feather="shield"></i>
                       <span className="link-title">Reportes</span>
                     </NavLink>

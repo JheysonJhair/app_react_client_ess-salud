@@ -9,6 +9,7 @@ import { NewVolunteer } from "../modules/volunteer/pages/NewVolunteer";
 
 import { NewHealthCenter } from "../modules/health-center/NewHealthCenter";
 import { HealthCenters } from "../modules/health-center/HealthCenters";
+import Reports from "../modules/reports/Reports";
 
 const appRouter = [
   {
@@ -46,6 +47,10 @@ const appRouter = [
       {
         path: "/new-health-center",
         element: <NewHealthCenter />,
+      },
+      {
+        path: "/reports",
+        element: <Reports />,
       },
       {
         path: "*",
