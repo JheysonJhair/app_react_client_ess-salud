@@ -120,10 +120,10 @@ export function HealthCenters() {
       <nav className="page-breadcrumb">
         <ol className="breadcrumb">
           <li className="breadcrumb-item">
-            <a href="#">Usuario</a>
+            <a href="#">Cnetro de salud</a>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
-            Lista de Voluntarios
+            Lista de centros
           </li>
         </ol>
       </nav>
@@ -132,7 +132,7 @@ export function HealthCenters() {
         <input
           type="text"
           className="form-control"
-          placeholder="Buscar voluntario..."
+          placeholder="Buscar centro..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />

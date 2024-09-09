@@ -68,7 +68,7 @@ export function NewHealthCenter() {
       if (missingFields.length > 0) {
         Swal.fire({
           title: "Error!",
-          text: "Por favor complete los siguientes campos obligatorios:",
+          text: "Por favor complete todos los campos",
           icon: "error",
           confirmButtonText: "Aceptar",
         });
@@ -134,7 +134,7 @@ export function NewHealthCenter() {
                         type="text"
                         className="form-control"
                         name="nombreSalud"
-                        placeholder="Ingrese sus nombres y apellidos"
+                        placeholder="Ingrese el nombre"
                         onChange={handleInputChange}
                       />
                       {errorMessages.nombreSalud && (
@@ -219,12 +219,17 @@ export function NewHealthCenter() {
                   <div className="col-sm-6">
                     <div className="mb-3">
                       <label className="form-label">Departamento</label>
-                      <input
-                        type="text"
+                      <select
                         className="form-control"
                         name="departamento"
-                        placeholder="Ingrese el departamento"
-                      />
+                        onChange={handleInputChange}
+                        value={nuevoCentro.departamento || ""}
+                      >
+                        <option value="">Seleccione un departamento</option>
+                        <option value="Lima">Lima</option>
+                        <option value="Cusco">Cusco</option>
+                        <option value="Arequipa">Arequipa</option>
+                      </select>
                       {errorMessages.departamento && (
                         <div className="text-danger">
                           {errorMessages.departamento}

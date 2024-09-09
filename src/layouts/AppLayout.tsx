@@ -75,7 +75,7 @@ function AppLayout() {
           <div className="sidebar-body" style={{ backgroundColor: "#9eb3dc" }}>
             <ul className="nav">
               <li className="nav-item nav-category">Menú</li>
-              {user?.rol === "" && (
+              {user?.rol === 1 && (
                 <>
                   <li className="nav-item">
                     <a
@@ -170,7 +170,7 @@ function AppLayout() {
                   </li>
                 </>
               )}
-              {user?.rol === "" && (
+              {user?.rol === 2 && (
                 <>
                   <li className="nav-item">
                     <a
@@ -235,7 +235,7 @@ function AppLayout() {
                   </li>
                 </>
               )}
-              {user?.rol === "" && (
+              {user?.rol === 0 && (
                 <>
                   <li className="nav-item">
                     <NavLink to="/payment" className="nav-link">

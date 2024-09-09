@@ -10,6 +10,9 @@ import {
   eliminarUsuario,
   obtenerUsuarios,
 } from "../../../services/Usuario";
+import { formatearFecha } from "../../../utils/util";
+import { obtenerCentros } from "../../../services/HealthCenter";
+import { HealthCenter } from "../../../types/HealthCenter";
 
 export function Volunteers() {
   const [voluntario, setVoluntarios] = useState<User[]>([]);
@@ -35,13 +38,24 @@ export function Volunteers() {
   );
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+  const [healthCenters, setHealthCenters] = useState<HealthCenter[]>([]);
 
-  //---------------------------------------------------------------- GET CLIENTS
+  //---------------------------------------------------------------- GET HEALTH CENTERS
+  useEffect(() => {
+    const fetchHealthCenters = async () => {
+      const centros = await obtenerCentros();
+      setHealthCenters(centros);
+    };
+
+    fetchHealthCenters();
+  }, []);
+
+  //---------------------------------------------------------------- GET VOLUNTEERS
   useEffect(() => {
     const fetchData = async () => {
       try {
         let data = await obtenerUsuarios();
-        data = data.filter((voluntario: User) => voluntario.rol == "user");
+        data = data.filter((voluntario: User) => voluntario.rol == 0);
         setVoluntarios(data);
       } catch (error) {
         console.error("Error al obtener usuarios:", error);
@@ -49,7 +63,8 @@ export function Volunteers() {
     };
     fetchData();
   }, []);
-  //---------------------------------------------------------------- DELETE CLIENT
+  
+  //---------------------------------------------------------------- DELETE VOLUNTEER
   const handleEliminarUsuario = async (id: number) => {
     try {
       const confirmacion = await Swal.fire({
@@ -67,7 +82,7 @@ export function Volunteers() {
         const response = await eliminarUsuario(id);
         if (response.success) {
           const updatedUsuarios = voluntario.filter(
-            (voluntario) => voluntario.IdUser !== id
+            (voluntario) => voluntario.idUsuario !== id
           );
           setVoluntarios(updatedUsuarios);
           await Swal.fire(
@@ -85,7 +100,12 @@ export function Volunteers() {
   };
 
   const handleOpenModal = (voluntario: User) => {
-    setEditVolunter(voluntario);
+    setEditVolunter({
+      ...voluntario,
+      cumpleanos: voluntario.cumpleanos
+        ? new Date(voluntario.cumpleanos).toISOString().split("T")[0]
+        : "",
+    });
     setShowModal(true);
   };
 
@@ -94,18 +114,17 @@ export function Volunteers() {
     setEditVolunter({});
   };
 
-  //---------------------------------------------------------------- UPDATE CLIENT
+  //---------------------------------------------------------------- UPDATE VOLUNTEER
   const handleUpdateVolunteer = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const response = await actualizarUsuario({
         ...editVolunter,
-        rol: "",
       });
       if (response.success) {
         setVoluntarios(
           voluntario.map((voluntario) =>
-            voluntario.IdUser === editVolunter.IdUser
+            voluntario.idUsuario === editVolunter.idUsuario
               ? { ...voluntario, ...editVolunter }
               : voluntario
           )
@@ -173,16 +192,16 @@ export function Volunteers() {
                   <td>{voluntario.dni}</td>
                   <td>{voluntario.direccion}</td>
                   <td>{voluntario.email}</td>
-                  <td>{voluntario.cumpleanos}</td>
-                  <td>{voluntario.idCentroSalud}</td>
+                  <td>
+                    {voluntario.cumpleanos
+                      ? formatearFecha(voluntario.cumpleanos)
+                      : "N/A"}
+                  </td>
+                  <td>{voluntario.CentroSalud?.nombreSalud}</td>
                   <td>{voluntario.departamento}</td>
-                  <td>{voluntario.rol}</td>
-                  <td>{voluntario.password}</td>
-
-                  <td>{}</td>
-                  <td>{}</td>
-                  <td>{}</td>
-
+                  <td>
+                    {voluntario.rol === 0 ? "Voluntario" : voluntario.rol}
+                  </td>
                   <td>{voluntario.password}</td>
                   <td>
                     <button
@@ -194,7 +213,7 @@ export function Volunteers() {
                     <button
                       className="btn btn-danger btn-sm"
                       onClick={() =>
-                        handleEliminarUsuario(voluntario.IdUser || 0)
+                        handleEliminarUsuario(voluntario.idUsuario || 0)
                       }
                     >
                       <FaTrash />
@@ -228,12 +247,12 @@ export function Volunteers() {
 
       <Modal show={showModal} onHide={handleCloseModal} size="lg" centered>
         <Modal.Header closeButton>
-          <Modal.Title>Actualizar Usuario</Modal.Title>
+          <Modal.Title>Actualizar Voluntario</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleUpdateVolunteer}>
             <div className="row">
-              <div className="col-md-12 mb-3">
+              <div className="col-md-8 mb-3">
                 <Form.Group controlId="formFirstName">
                   <Form.Label>Nombre</Form.Label>
                   <Form.Control
@@ -249,9 +268,7 @@ export function Volunteers() {
                   />
                 </Form.Group>
               </div>
-            </div>
-            <div className="row">
-              <div className="col-md-6 mb-3">
+              <div className="col-md-4 mb-3">
                 <Form.Group controlId="formDni">
                   <Form.Label>DNI</Form.Label>
                   <Form.Control
@@ -260,22 +277,6 @@ export function Volunteers() {
                     value={editVolunter.dni || ""}
                     onChange={(e) =>
                       setEditVolunter({ ...editVolunter, dni: e.target.value })
-                    }
-                  />
-                </Form.Group>
-              </div>
-              <div className="col-md-6 mb-3">
-                <Form.Group controlId="formAddress">
-                  <Form.Label>Dirección</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Dirección"
-                    value={editVolunter.direccion || ""}
-                    onChange={(e) =>
-                      setEditVolunter({
-                        ...editVolunter,
-                        direccion: e.target.value,
-                      })
                     }
                   />
                 </Form.Group>
@@ -296,6 +297,71 @@ export function Volunteers() {
                       })
                     }
                   />
+                </Form.Group>
+              </div>
+
+              <div className="col-md-6 mb-3">
+                <Form.Group controlId="formAddress">
+                  <Form.Label>Dirección</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Dirección"
+                    value={editVolunter.direccion || ""}
+                    onChange={(e) =>
+                      setEditVolunter({
+                        ...editVolunter,
+                        direccion: e.target.value,
+                      })
+                    }
+                  />
+                </Form.Group>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-6 mb-3">
+                <Form.Group controlId="formCentroSalud">
+                  <Form.Label>Centro de Salud</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={editVolunter.CentroSalud?.idCentroSalud || ""}
+                    onChange={(e) =>
+                      setEditVolunter({
+                        ...editVolunter,
+                        idCentroSalud: parseInt(e.target.value),
+                      })
+                    }
+                  >
+                    <option value="">Seleccionar Centro de Salud</option>
+                    {healthCenters.map((centro) => (
+                      <option
+                        key={centro.idCentroSalud}
+                        value={centro.idCentroSalud}
+                      >
+                        {centro.nombreSalud}
+                      </option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
+              </div>
+
+              <div className="col-md-6 mb-3">
+                <Form.Group controlId="formDepartamento">
+                  <Form.Label>Departamento</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={editVolunter.departamento || ""}
+                    onChange={(e) =>
+                      setEditVolunter({
+                        ...editVolunter,
+                        departamento: e.target.value,
+                      })
+                    }
+                  >
+                    <option value="">Seleccionar Departamento</option>
+                    <option value="Lima">Lima</option>
+                    <option value="Cusco">Cusco</option>
+                    <option value="Arequipa">Arequipa</option>
+                  </Form.Control>
                 </Form.Group>
               </div>
             </div>

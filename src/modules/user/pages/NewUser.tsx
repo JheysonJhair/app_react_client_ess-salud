@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -10,13 +10,13 @@ import {
 } from "../../../utils/validations";
 import { User } from "../../../types/User";
 import { crearUsuario } from "../../../services/Usuario";
+import { obtenerCentros } from "../../../services/HealthCenter";
+import { HealthCenter } from "../../../types/HealthCenter";
 
 export function NewUser() {
   const navigate = useNavigate();
-  const [nuevoUsuario, setNuevoUsuario] = useState<Partial<User>>({
-    rol: "",
-  });
-
+  const [nuevoUsuario, setNuevoUsuario] = useState<Partial<User>>({});
+  const [healthCenters, setHealthCenters] = useState<HealthCenter[]>([]);
   const [errorMessages, setErrorMessages] = useState({
     nombresCompletos: "",
     dni: "",
@@ -28,6 +28,16 @@ export function NewUser() {
     departamento: "",
     idCentroSalud: "",
   });
+
+  //---------------------------------------------------------------- GET HEALTH CENTERS
+  useEffect(() => {
+    const fetchHealthCenters = async () => {
+      const centros = await obtenerCentros();
+      setHealthCenters(centros);
+    };
+
+    fetchHealthCenters();
+  }, []);
 
   //---------------------------------------------------------------- INPUT CHANGE
   const handleInputChange = (
@@ -141,10 +151,10 @@ export function NewUser() {
         <div className="col-md-12 stretch-card">
           <div className="card">
             <div className="card-body">
-              <h6 className="card-title">Registrar usuario</h6>
+              <h6 className="card-title">Registrar Usuario</h6>
               <form>
                 <div className="row">
-                  <div className="col-sm-8">
+                  <div className="col-sm-5">
                     <div className="mb-3">
                       <label className="form-label">Nombres y apellidos</label>
                       <input
@@ -176,6 +186,24 @@ export function NewUser() {
                       )}
                     </div>
                   </div>
+                  <div className="col-sm-3">
+                    <div className="mb-3">
+                      <label className="form-label">Rol</label>
+                      <select
+                        className="form-control"
+                        name="rol"
+                        onChange={handleInputChange}
+                        value={nuevoUsuario.rol || ""}
+                      >
+                        <option value="">Seleccione un rol</option>
+                        <option value="1">Administrador</option>
+                        <option value="2">Super Administrador</option>
+                      </select>
+                      {errorMessages.rol && (
+                        <div className="text-danger">{errorMessages.rol}</div>
+                      )}
+                    </div>
+                  </div>
                 </div>
 
                 <div className="row">
@@ -196,19 +224,24 @@ export function NewUser() {
                       )}
                     </div>
                   </div>
-                </div>
-
-                <div className="row">
                   <div className="col-sm-4">
                     <div className="mb-3">
                       <label className="form-label">Centro de Salud</label>
-                      <input
-                        type="text"
+                      <select
                         className="form-control"
                         name="idCentroSalud"
-                        placeholder="Ingrese el nombre del centro de salud"
                         onChange={handleInputChange}
-                      />
+                      >
+                        <option value="">Seleccione un centro de salud</option>
+                        {healthCenters.map((centro) => (
+                          <option
+                            key={centro.idCentroSalud}
+                            value={centro.idCentroSalud}
+                          >
+                            {centro.nombreSalud}
+                          </option>
+                        ))}
+                      </select>
                       {errorMessages.idCentroSalud && (
                         <div className="text-danger">
                           {errorMessages.idCentroSalud}
@@ -218,14 +251,35 @@ export function NewUser() {
                   </div>
                   <div className="col-sm-4">
                     <div className="mb-3">
-                      <label className="form-label">Departamento</label>
+                      <label className="form-label">Email</label>
                       <input
                         type="text"
                         className="form-control"
-                        name="departamento"
-                        placeholder="Ingrese su departamento"
+                        name="email"
+                        placeholder="Ingrese su email"
                         onChange={handleInputChange}
                       />
+                      {errorMessages.email && (
+                        <div className="text-danger">{errorMessages.email}</div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-sm-4">
+                    <div className="mb-3">
+                      <label className="form-label">Departamento</label>
+                      <select
+                        className="form-control"
+                        name="departamento"
+                        onChange={handleInputChange}
+                      >
+                        <option value="">Seleccione un departamento</option>
+                        <option value="Lima">Lima</option>
+                        <option value="Cusco">Cusco</option>
+                        <option value="Arequipa">Arequipa</option>
+                      </select>
                       {errorMessages.departamento && (
                         <div className="text-danger">
                           {errorMessages.departamento}
@@ -235,31 +289,16 @@ export function NewUser() {
                   </div>
                   <div className="col-sm-4">
                     <div className="mb-3">
-                      <label className="form-label">Rol</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="Role"
-                        placeholder="Ingrese su rol"
-                      />
-                      <div className="text-danger"></div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="col-sm-6">
-                    <div className="mb-3">
                       <label className="form-label">Cumpleaños *</label>
                       <input
                         type="date"
                         className="form-control"
-                        name="BirthDate"
+                        name="cumpleanos"
                         onChange={handleInputChange}
                       />
                     </div>
                   </div>
-                  <div className="col-sm-6">
+                  <div className="col-sm-4">
                     <div className="mb-3">
                       <label className="form-label">Contraseña</label>
                       <input
@@ -277,6 +316,8 @@ export function NewUser() {
                       )}
                     </div>
                   </div>
+
+                  <div className="row"></div>
                 </div>
               </form>
               <button

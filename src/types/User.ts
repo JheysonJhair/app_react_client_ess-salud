@@ -1,27 +1,31 @@
+import { HealthCenter } from "./HealthCenter";
+
 export interface User {
-  IdUser?: number;
+  idUsuario?: number;
   nombresCompletos: string;
   dni: string;
   direccion: string;
   email: string;
   cumpleanos: string;
   password: string;
-  rol: string;
-  departamento: number;
+  rol: number;
+  departamento: string;
   idCentroSalud?: number;
+  CentroSalud?:HealthCenter
 }
 
 export interface ErrorMessages {
-  IdUser?: number;
+  idUsuario?: number;
   nombresCompletos: string;
   dni: string;
   direccion: string;
   email: string;
   cumpleanos: string;
   password: string;
-  rol: string;
-  departamento: number;
+  rol: number;
+  departamento: string;
   idCentroSalud?: number;
+  CentroSalud?:HealthCenter
 }
 
 export interface Login {

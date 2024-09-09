@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Login } from "../types/User";
 
-const API_URL = "project-essalud-production.up.railway.app/api";
+const API_URL = "https://project-essalud-production.up.railway.app/api";
 
 //---------------------------------------------------------------- LOGIN
 export const login = async (loginData: Login) => {

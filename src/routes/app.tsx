@@ -21,7 +21,7 @@ const appRouter = [
     children: [
       {
         path: "/",
-        element: <Users />,
+
       },
       {
         path: "/users",

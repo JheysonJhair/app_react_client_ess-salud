@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -6,17 +6,19 @@ import {
   validateRequiredField,
   validateDNI,
   validateEmail,
-  validatePhoneNumber,
 } from "../../../utils/validations";
 import { crearUsuario } from "../../../services/Usuario";
+import { obtenerCentros } from "../../../services/HealthCenter";
 import { User } from "../../../types/User";
+import { HealthCenter } from "../../../types/HealthCenter";
 
 export function NewVolunteer() {
   const navigate = useNavigate();
   const [nuevoUsuario, setNuevoVoluntario] = useState<Partial<User>>({
-    rol: "",
+    rol: 0,
   });
 
+  const [healthCenters, setHealthCenters] = useState<HealthCenter[]>([]);
   const [errorMessages, setErrorMessages] = useState({
     nombresCompletos: "",
     dni: "",
@@ -24,10 +26,19 @@ export function NewVolunteer() {
     email: "",
     cumpleanos: "",
     password: "",
-    rol: "",
     departamento: "",
     idCentroSalud: "",
   });
+
+  //---------------------------------------------------------------- GET HEALTH CENTERS
+  useEffect(() => {
+    const fetchHealthCenters = async () => {
+      const centros = await obtenerCentros();
+      setHealthCenters(centros);
+    };
+
+    fetchHealthCenters();
+  }, []);
 
   //---------------------------------------------------------------- INPUT CHANGE
   const handleInputChange = (
@@ -37,7 +48,7 @@ export function NewVolunteer() {
 
     setNuevoVoluntario((prevUsuario) => ({
       ...prevUsuario,
-      [name]: value,
+      [name]: name === "idCentroSalud" ? Number(value) : value,
     }));
 
     setErrorMessages((prevErrors) => ({
@@ -56,10 +67,6 @@ export function NewVolunteer() {
         return validateDNI(value) || validateRequiredField(value) || null;
       case "Mail":
         return validateEmail(value) || validateRequiredField(value) || null;
-      case "Phone":
-        return (
-          validatePhoneNumber(value) || validateRequiredField(value) || null
-        );
       default:
         return validateRequiredField(value);
     }
@@ -68,34 +75,32 @@ export function NewVolunteer() {
   //---------------------------------------------------------------- POST USER
   type UsuarioKey = keyof Partial<User>;
   const handleRegistrarUsuario = async () => {
+    const requiredFields: UsuarioKey[] = [
+      "nombresCompletos",
+      "dni",
+      "direccion",
+      "email",
+      "cumpleanos",
+      "password",
+      "departamento",
+      "idCentroSalud",
+    ];
+
+    const missingFields = requiredFields.filter(
+      (field) => !nuevoUsuario[field]
+    );
+    console.log(missingFields);
+    if (missingFields.length > 0) {
+      Swal.fire({
+        title: "Error!",
+        text: "Por favor complete los siguientes campos obligatorios:",
+        icon: "error",
+        confirmButtonText: "Aceptar",
+      });
+      return;
+    }
     try {
-      const requiredFields: UsuarioKey[] = [
-        "nombresCompletos",
-        "dni",
-        "direccion",
-        "email",
-        "cumpleanos",
-        "password",
-        "rol",
-        "departamento",
-        "idCentroSalud",
-      ];
-
-      const missingFields = requiredFields.filter(
-        (field) => !nuevoUsuario[field]
-      );
-      if (missingFields.length > 0) {
-        Swal.fire({
-          title: "Error!",
-          text: "Por favor complete los siguientes campos obligatorios:",
-          icon: "error",
-          confirmButtonText: "Aceptar",
-        });
-        return;
-      }
-
       let response: { msg: string; success: boolean };
-      console.log(nuevoUsuario);
       response = await crearUsuario(nuevoUsuario);
       if (response.success) {
         Swal.fire({
@@ -196,19 +201,24 @@ export function NewVolunteer() {
                       )}
                     </div>
                   </div>
-                </div>
-
-                <div className="row">
                   <div className="col-sm-4">
                     <div className="mb-3">
                       <label className="form-label">Centro de Salud</label>
-                      <input
-                        type="text"
+                      <select
                         className="form-control"
                         name="idCentroSalud"
-                        placeholder="Ingrese el nombre del centro de salud"
                         onChange={handleInputChange}
-                      />
+                      >
+                        <option value="">Seleccione un centro de salud</option>
+                        {healthCenters.map((centro) => (
+                          <option
+                            key={centro.idCentroSalud}
+                            value={centro.idCentroSalud}
+                          >
+                            {centro.nombreSalud}
+                          </option>
+                        ))}
+                      </select>
                       {errorMessages.idCentroSalud && (
                         <div className="text-danger">
                           {errorMessages.idCentroSalud}
@@ -218,14 +228,35 @@ export function NewVolunteer() {
                   </div>
                   <div className="col-sm-4">
                     <div className="mb-3">
-                      <label className="form-label">Departamento</label>
+                      <label className="form-label">Email</label>
                       <input
                         type="text"
                         className="form-control"
-                        name="departamento"
-                        placeholder="Ingrese su departamento"
+                        name="email"
+                        placeholder="Ingrese su email"
                         onChange={handleInputChange}
                       />
+                      {errorMessages.email && (
+                        <div className="text-danger">{errorMessages.email}</div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-sm-4">
+                    <div className="mb-3">
+                      <label className="form-label">Departamento</label>
+                      <select
+                        className="form-control"
+                        name="departamento"
+                        onChange={handleInputChange}
+                      >
+                        <option value="">Seleccione un departamento</option>
+                        <option value="Lima">Lima</option>
+                        <option value="Cusco">Cusco</option>
+                        <option value="Arequipa">Arequipa</option>
+                      </select>
                       {errorMessages.departamento && (
                         <div className="text-danger">
                           {errorMessages.departamento}
@@ -233,33 +264,19 @@ export function NewVolunteer() {
                       )}
                     </div>
                   </div>
-                  <div className="col-sm-4">
-                    <div className="mb-3">
-                      <label className="form-label">Rol</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="Role"
-                        placeholder="Ingrese su rol"
-                      />
-                      <div className="text-danger"></div>
-                    </div>
-                  </div>
-                </div>
 
-                <div className="row">
-                  <div className="col-sm-6">
+                  <div className="col-sm-4">
                     <div className="mb-3">
                       <label className="form-label">Cumpleaños *</label>
                       <input
                         type="date"
                         className="form-control"
-                        name="BirthDate"
+                        name="cumpleanos"
                         onChange={handleInputChange}
                       />
                     </div>
                   </div>
-                  <div className="col-sm-6">
+                  <div className="col-sm-4">
                     <div className="mb-3">
                       <label className="form-label">Contraseña</label>
                       <input
@@ -277,6 +294,8 @@ export function NewVolunteer() {
                       )}
                     </div>
                   </div>
+
+                  <div className="row"></div>
                 </div>
               </form>
               <button

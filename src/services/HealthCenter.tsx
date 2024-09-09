@@ -1,6 +1,6 @@
 import { HealthCenter, ApiResponse } from "../types/HealthCenter";
 
-const API_URL = "project-essalud-production.up.railway.app/api";
+const API_URL = "https://project-essalud-production.up.railway.app/api";
 
 //---------------------------------------------------------------- GET HEALTH CENTER
 export async function obtenerCentros(): Promise<HealthCenter[]> {

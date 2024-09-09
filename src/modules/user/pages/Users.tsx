@@ -8,6 +8,9 @@ import {
   actualizarUsuario,
 } from "../../../services/Usuario";
 import { Modal, Button, Form } from "react-bootstrap";
+import { formatearFecha } from "../../../utils/util";
+import { obtenerCentros } from "../../../services/HealthCenter";
+import { HealthCenter } from "../../../types/HealthCenter";
 
 export function Users() {
   const [usuarios, setUsuarios] = useState<User[]>([]);
@@ -33,12 +36,25 @@ export function Users() {
   );
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+  const [healthCenters, setHealthCenters] = useState<HealthCenter[]>([]);
+  //---------------------------------------------------------------- GET HEALTH CENTERS
+  useEffect(() => {
+    const fetchHealthCenters = async () => {
+      const centros = await obtenerCentros();
+      setHealthCenters(centros);
+    };
 
+    fetchHealthCenters();
+  }, []);
+
+  //---------------------------------------------------------------- GET USERS
   useEffect(() => {
     const fetchData = async () => {
       try {
         let data = await obtenerUsuarios();
-        data = data.filter((usuario: User) => usuario.rol == "user");
+        data = data.filter(
+          (usuario: User) => usuario.rol == 1 || usuario.rol == 2
+        );
         setUsuarios(data);
       } catch (error) {
         console.error("Error al obtener usuarios:", error);
@@ -47,6 +63,7 @@ export function Users() {
     fetchData();
   }, []);
 
+  //---------------------------------------------------------------- DELETE USER
   const handleEliminarUsuario = async (id: number) => {
     try {
       const confirmacion = await Swal.fire({
@@ -64,7 +81,7 @@ export function Users() {
         const response = await eliminarUsuario(id);
         if (response.success) {
           const updatedUsuarios = usuarios.filter(
-            (usuario) => usuario.IdUser !== id
+            (usuario) => usuario.idUsuario !== id
           );
           setUsuarios(updatedUsuarios);
           await Swal.fire(
@@ -82,7 +99,12 @@ export function Users() {
   };
 
   const handleOpenModal = (usuario: User) => {
-    setEditUser(usuario);
+    setEditUser({
+      ...usuario,
+      cumpleanos: usuario.cumpleanos
+        ? new Date(usuario.cumpleanos).toISOString().split("T")[0]
+        : "",
+    });
     setShowModal(true);
   };
 
@@ -91,17 +113,19 @@ export function Users() {
     setEditUser({});
   };
 
+  //---------------------------------------------------------------- UPDATE USER
   const handleUpdateUser = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const response = await actualizarUsuario({
         ...editUser,
-        rol: "",
       });
       if (response.success) {
         setUsuarios(
           usuarios.map((user) =>
-            user.IdUser === editUser.IdUser ? { ...user, ...editUser } : user
+            user.idUsuario === editUser.idUsuario
+              ? { ...user, ...editUser }
+              : user
           )
         );
         await Swal.fire("¡Actualizado!", response.msg, "success");
@@ -167,15 +191,20 @@ export function Users() {
                   <td>{usuario.dni}</td>
                   <td>{usuario.direccion}</td>
                   <td>{usuario.email}</td>
-                  <td>{usuario.cumpleanos}</td>
-                  <td>{usuario.idCentroSalud}</td>
+                  <td>
+                    {usuario.cumpleanos
+                      ? formatearFecha(usuario.cumpleanos)
+                      : "N/A"}
+                  </td>
+                  <td>{usuario.CentroSalud?.nombreSalud}</td>
                   <td>{usuario.departamento}</td>
-                  <td>{usuario.rol}</td>
-                  <td>{usuario.password}</td>
-
-                  <td>{}</td>
-                  <td>{}</td>
-                  <td>{}</td>
+                  <td>
+                    {usuario.rol === 1
+                      ? "Administrador"
+                      : usuario.rol === 2
+                      ? "Super Administrador"
+                      : "Desconocido"}
+                  </td>
 
                   <td>{usuario.password}</td>
                   <td>
@@ -187,7 +216,9 @@ export function Users() {
                     </button>
                     <button
                       className="btn btn-danger btn-sm"
-                      onClick={() => handleEliminarUsuario(usuario.IdUser || 0)}
+                      onClick={() =>
+                        handleEliminarUsuario(usuario.idUsuario || 0)
+                      }
                     >
                       <FaTrash />
                     </button>
@@ -225,7 +256,7 @@ export function Users() {
         <Modal.Body>
           <Form onSubmit={handleUpdateUser}>
             <div className="row">
-              <div className="col-md-12 mb-3">
+              <div className="col-md-5 mb-3">
                 <Form.Group controlId="formFirstName">
                   <Form.Label>Nombre</Form.Label>
                   <Form.Control
@@ -241,9 +272,7 @@ export function Users() {
                   />
                 </Form.Group>
               </div>
-            </div>
-            <div className="row">
-              <div className="col-md-6 mb-3">
+              <div className="col-md-4 mb-3">
                 <Form.Group controlId="formDni">
                   <Form.Label>DNI</Form.Label>
                   <Form.Control
@@ -256,6 +285,44 @@ export function Users() {
                   />
                 </Form.Group>
               </div>
+              <div className="col-md-3 mb-3">
+                <Form.Group controlId="formRol">
+                  <Form.Label>Rol</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={editUser.rol || ""}
+                    onChange={(e) =>
+                      setEditUser({
+                        ...editUser,
+                        rol: parseInt(e.target.value),
+                      })
+                    }
+                  >
+                    <option value="">Seleccionar rol</option>
+                    <option value={1}>Administrador</option>
+                    <option value={2}>Super Administrador</option>
+                  </Form.Control>
+                </Form.Group>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-6 mb-3">
+                <Form.Group controlId="formMail">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Email"
+                    value={editUser.email || ""}
+                    onChange={(e) =>
+                      setEditUser({
+                        ...editUser,
+                        email: e.target.value,
+                      })
+                    }
+                  />
+                </Form.Group>
+              </div>
+
               <div className="col-md-6 mb-3">
                 <Form.Group controlId="formAddress">
                   <Form.Label>Dirección</Form.Label>
@@ -275,19 +342,49 @@ export function Users() {
             </div>
             <div className="row">
               <div className="col-md-6 mb-3">
-                <Form.Group controlId="formMail">
-                  <Form.Label>Email</Form.Label>
+                <Form.Group controlId="formCentroSalud">
+                  <Form.Label>Centro de Salud</Form.Label>
                   <Form.Control
-                    type="email"
-                    placeholder="Email"
-                    value={editUser.email || ""}
+                    as="select"
+                    value={editUser.CentroSalud?.idCentroSalud || ""}
                     onChange={(e) =>
                       setEditUser({
                         ...editUser,
-                        email: e.target.value,
+                        idCentroSalud: parseInt(e.target.value),
                       })
                     }
-                  />
+                  >
+                    <option value="">Seleccionar Centro de Salud</option>
+                    {healthCenters.map((centro) => (
+                      <option
+                        key={centro.idCentroSalud}
+                        value={centro.idCentroSalud}
+                      >
+                        {centro.nombreSalud}
+                      </option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
+              </div>
+
+              <div className="col-md-6 mb-3">
+                <Form.Group controlId="formDepartamento">
+                  <Form.Label>Departamento</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={editUser.departamento || ""}
+                    onChange={(e) =>
+                      setEditUser({
+                        ...editUser,
+                        departamento: e.target.value,
+                      })
+                    }
+                  >
+                    <option value="">Seleccionar Departamento</option>
+                    <option value="Lima">Lima</option>
+                    <option value="Cusco">Cusco</option>
+                    <option value="Arequipa">Arequipa</option>
+                  </Form.Control>
                 </Form.Group>
               </div>
             </div>

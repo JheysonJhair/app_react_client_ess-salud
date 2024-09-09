@@ -1,6 +1,6 @@
 import { User, ApiResponse } from "../types/User";
 
-const API_URL = "project-essalud-production.up.railway.app/api";
+const API_URL = "https://project-essalud-production.up.railway.app/api";
 
 //---------------------------------------------------------------- GET USER
 export async function obtenerUsuarios(): Promise<User[]> {
