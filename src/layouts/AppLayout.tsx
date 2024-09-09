@@ -201,7 +201,7 @@ function AppLayout() {
                     </div>
                   </li>
                   <li className="nav-item">
-                    <NavLink to="/payment" className="nav-link">
+                    <NavLink to="/ShiftAvailability" className="nav-link">
                       <i className="link-icon" data-feather="clock"></i>
                       <span className="link-title">
                         Turnos y disponibilidad
@@ -209,28 +209,22 @@ function AppLayout() {
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink to="/payment" className="nav-link">
+                    <NavLink to="/evaluation" className="nav-link">
                       <i className="link-icon" data-feather="clipboard"></i>
                       <span className="link-title">Evaluaciones</span>
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink to="/payment" className="nav-link">
+                    <NavLink to="/trainings" className="nav-link">
                       <i className="link-icon" data-feather="book"></i>
                       <span className="link-title">Capacitaciones</span>
                     </NavLink>
                   </li>
+                  <li className="nav-item nav-category">Datos</li>
                   <li className="nav-item">
-                    <NavLink to="/payment" className="nav-link">
+                    <NavLink to="/reportsAdmin" className="nav-link">
                       <i className="link-icon" data-feather="pie-chart"></i>
                       <span className="link-title">Reportes</span>
-                    </NavLink>
-                  </li>
-                  <li className="nav-item nav-category">Configuración</li>
-                  <li className="nav-item">
-                    <NavLink to="/payment" className="nav-link">
-                      <i className="link-icon" data-feather="shield"></i>
-                      <span className="link-title">Roles y permisos</span>
                     </NavLink>
                   </li>
                 </>

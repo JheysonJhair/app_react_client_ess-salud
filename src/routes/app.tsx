@@ -10,6 +10,10 @@ import { NewVolunteer } from "../modules/volunteer/pages/NewVolunteer";
 import { NewHealthCenter } from "../modules/health-center/NewHealthCenter";
 import { HealthCenters } from "../modules/health-center/HealthCenters";
 import Reports from "../modules/reports/Reports";
+import ShiftAvailability from "../modules/shiftAvailability/shiftAvailability";
+import Evaluation from "../modules/evaluation/evaluation";
+import Trainings from "../modules/trainings/trainings";
+import ReportsAdmin from "../modules/reportsAdmin/ReportsAdmin";
 
 const appRouter = [
   {
@@ -56,6 +60,30 @@ const appRouter = [
         path: "*",
         element: <Navigate to="/" />,
       },
+
+
+
+      {
+        path: "/ShiftAvailability",
+        element: <ShiftAvailability />,
+      },
+      {
+        path: "/Evaluation",
+        element: <Evaluation />,
+      },
+      {
+        path: "/Trainings",
+        element: <Trainings />,
+      },
+      {
+        path: "/ReportsAdmin",
+        element: <ReportsAdmin />,
+      },
+
+
+
+
+
     ],
   },
 ];
