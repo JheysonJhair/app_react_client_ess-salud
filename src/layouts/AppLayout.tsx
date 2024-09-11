@@ -238,19 +238,6 @@ function AppLayout() {
                     </NavLink>
                   </li>
 
-                  <li className="nav-item">
-                    <NavLink
-                      to="/evaluation"
-                      className="nav-link"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        window.location.href = "/evaluation";
-                      }}
-                    >
-                      <i className="link-icon" data-feather="clipboard"></i>
-                      <span className="link-title">Evaluaciones</span>
-                    </NavLink>
-                  </li>
 
                   <li className="nav-item">
                     <NavLink

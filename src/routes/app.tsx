@@ -62,10 +62,7 @@ const appRouter = [
         path: "/shift-availability",
         element: <ShiftAvailability />,
       },
-      {
-        path: "/evaluation",
-        element: <Evaluation />,
-      },
+      
       {
         path: "/trainings",
         element: <Trainings />,
