@@ -1,7 +1,10 @@
 function Reports() {
   return (
     <div className="row">
+      {/* Contenido principal de la página */}
       <div className="page-content">
+
+        {/* Breadcrumb para navegación */}
         <nav className="page-breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
@@ -13,7 +16,7 @@ function Reports() {
           </ol>
         </nav>
 
-        {/* Registro de Actividades en Centros de Salud */}
+        {/* Sección: Registro de Actividades en Centros de Salud */}
         <div className="table-container mt-4">
           <h4 className="mb-4">Registro de Actividades Centros de Salud</h4>
           <table className="table table-bordered">
@@ -45,7 +48,7 @@ function Reports() {
           </table>
         </div>
 
-        {/* Registro de actividades administrador */}
+        {/* Sección: Registro de Actividades Administrador */}
         <div className="table-container mt-4">
           <h4 className="mb-4">Registro de Actividades Administrador</h4>
           <table className="table table-bordered">
@@ -72,39 +75,35 @@ function Reports() {
           </table>
         </div>
 
-        {/* Registro de actividades voluntariado */}
-        <div className="container mt-4">
-          <div className="payment-container">
-            <div className="table-container">
-              <h4 className="mb-4">Registro de Actividades Voluntariado</h4>
-              <table className="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>Voluntario</th>
-                    <th>Fecha</th>
-                    <th>Turno</th>
-                    <th>Hora</th>
-                    <th>Email</th>
-                    <th>Actividades</th>
-                    <th>Incidentes</th>
-                    <th>Comentario supervisor</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Juan</td>
-                    <td>12/12/12</td>
-                    <td>Mañana</td>
-                    <td>08:00 || 12:00</td>
-                    <td>1233@hotmail.com</td>
-                    <td>Actividades en el día</td>
-                    <td>Descripción de Incidentes</td>
-                    <td>Descripción de supervisión</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+        {/* Sección: Registro de Actividades Voluntariado */}
+        <div className="table-container mt-4">
+          <h4 className="mb-4">Registro de Actividades Voluntariado</h4>
+          <table className="table table-bordered">
+            <thead>
+            <tr>
+                <th>Voluntario</th>
+                <th>Fecha</th>
+                <th>Turno</th>
+                <th>Hora</th>
+                <th>Email</th>
+                <th>Actividades</th>
+                <th>Incidentes</th>
+                <th>Comentario supervisor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Juan</td>
+                <td>12/12/2014</td>
+                <td>Mañana</td>
+                <td>08:00 || 12:00</td>
+                <td>1233@hotmail.com</td>
+                <td>Actividades en el día</td>
+                <td>Descripción de Incidentes</td>
+                <td>Descripción de supervisión</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

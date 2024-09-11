@@ -101,6 +101,7 @@ function ReportsAdmin() {
             </tbody>
           </table>
         </div>
+        
       </div>
     </div>
   );
