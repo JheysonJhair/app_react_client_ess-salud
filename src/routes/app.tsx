@@ -18,7 +18,6 @@ import Profile from "../modules/profile/Profile";
 import AvailabilityUser from "../modules/shiftAvailability/shiftAvailabilityUser";
 import TradinUser from "../modules/trainings/trainigsUser";
 
-
 const appRouter = [
   {
     path: "/",
@@ -30,7 +29,6 @@ const appRouter = [
     children: [
       {
         path: "/",
-
       },
       {
         path: "/users",
@@ -61,51 +59,42 @@ const appRouter = [
         element: <Reports />,
       },
       {
-        path: "*",
-        element: <Navigate to="/" />,
-      },
-
-
-
-      {
-        path: "/ShiftAvailability",
+        path: "/shift-availability",
         element: <ShiftAvailability />,
       },
       {
-        path: "/Evaluation",
+        path: "/evaluation",
         element: <Evaluation />,
       },
       {
-        path: "/Trainings",
+        path: "/trainings",
         element: <Trainings />,
       },
       {
-        path: "/ReportsAdmin",
+        path: "/reports-admin",
         element: <ReportsAdmin />,
       },
 
-      
-
-
       {
-        path: "/Attendance",
+        path: "/attendance",
         element: <Attendance />,
       },
       {
-        path: "/Profile",
+        path: "/profile",
         element: <Profile />,
       },
       {
-        path: "/AvailabilityUser",
+        path: "/availability-user",
         element: <AvailabilityUser />,
       },
       {
-        path: "/TradinUser",
+        path: "/tradin-user",
         element: <TradinUser />,
       },
-
-
-
+      {
+        path: "*",
+        element: <Navigate to="/" />,
+      },
     ],
   },
 ];

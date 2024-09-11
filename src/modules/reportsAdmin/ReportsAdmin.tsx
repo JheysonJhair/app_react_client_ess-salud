@@ -1,39 +1,37 @@
-
-
 function ReportsAdmin() {
   // Datos de ejemplo para los reportes
   const activities = [
     {
-      userId: 'U001',
-      entryDate: '2024-09-08',
-      entryTime: '08:00',
-      exitTime: '17:00',
-      activities: 'Revisión de informes',
-      incidents: 'Ninguno'
+      userId: "U001",
+      entryDate: "2024-09-08",
+      entryTime: "08:00",
+      exitTime: "17:00",
+      activities: "Revisión de informes",
+      incidents: "Ninguno",
     },
     {
-      userId: 'U002',
-      entryDate: '2024-09-08',
-      entryTime: '09:00',
-      exitTime: '18:00',
-      activities: 'Desarrollo de características',
-      incidents: 'Problema con el servidor'
-    }
+      userId: "U002",
+      entryDate: "2024-09-08",
+      entryTime: "09:00",
+      exitTime: "18:00",
+      activities: "Desarrollo de características",
+      incidents: "Problema con el servidor",
+    },
   ];
 
   const detailedActivities = [
     {
-      userId: 'U001',
-      activityDate: '2024-09-08',
-      activityType: 'Curso',
-      activityComment: 'Curso de React'
+      userId: "U001",
+      activityDate: "2024-09-08",
+      activityType: "Curso",
+      activityComment: "Curso de React",
     },
     {
-      userId: 'U002',
-      activityDate: '2024-09-08',
-      activityType: 'Video',
-      activityComment: 'Tutorial de JavaScript'
-    }
+      userId: "U002",
+      activityDate: "2024-09-08",
+      activityType: "Video",
+      activityComment: "Tutorial de JavaScript",
+    },
   ];
 
   return (
@@ -44,7 +42,7 @@ function ReportsAdmin() {
             <a href="#">Administrador</a>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
-            Reportes de Administradores
+            Reportes
           </li>
         </ol>
       </nav>

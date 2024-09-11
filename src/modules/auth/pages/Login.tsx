@@ -32,7 +32,7 @@ export default function Login() {
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: `Bienvenido ${response.data.FirstName}`,
+          title: `Bienvenido ${response.data.nombresCompletos}`,
           showConfirmButton: false,
           timer: 1500,
         });

@@ -83,8 +83,7 @@ function Reports() {
                     <th>Voluntario</th>
                     <th>Fecha</th>
                     <th>Turno</th>
-                    <th>Hora Ingreso</th>
-                    <th>Hora Salida</th>
+                    <th>Hora</th>
                     <th>Email</th>
                     <th>Actividades</th>
                     <th>Incidentes</th>
@@ -93,10 +92,10 @@ function Reports() {
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Nombre de voluntario</td>
-                    <td>Mañana/Tarde</td>
+                    <td>Juan</td>
+                    <td>12/12/12</td>
+                    <td>Mañana</td>
                     <td>08:00 || 12:00</td>
-                    <td>12:00 || 16:00</td>
                     <td>1233@hotmail.com</td>
                     <td>Actividades en el día</td>
                     <td>Descripción de Incidentes</td>

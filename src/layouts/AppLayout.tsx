@@ -64,7 +64,7 @@ function AppLayout() {
             style={{ backgroundColor: "#9eb3dc" }}
           >
             <a href="#" className="sidebar-brand">
-               <span>Es</span>SALUD
+              <span>Es</span>SALUD
             </a>
             <div className="sidebar-toggler not-active">
               <span />
@@ -72,7 +72,7 @@ function AppLayout() {
               <span />
             </div>
           </div>
-          <div className="sidebar-body" style={{ backgroundColor: "#9eb3dc" }}>
+          <div className="sidebar-body" style={{ backgroundColor: "#9EB3DC" }}>
             <ul className="nav">
               <li className="nav-item nav-category">Menú</li>
               {user?.rol === 1 && (
@@ -149,22 +149,30 @@ function AppLayout() {
                     <div className="collapse" id="users">
                       <ul className="nav sub-menu">
                         <li className="nav-item">
-                          <NavLink to="/new-volunteer" className="nav-link">
+                          <NavLink to="/new-user" className="nav-link">
                             Nuevo administrador
                           </NavLink>
                         </li>
                         <li className="nav-item">
-                          <NavLink to="/volunteers" className="nav-link">
+                          <NavLink to="/users" className="nav-link">
                             Administrador
                           </NavLink>
                         </li>
                       </ul>
                     </div>
                   </li>
+
                   <li className="nav-item nav-category">Datos</li>
                   <li className="nav-item">
-                    <NavLink to="/reports" className="nav-link">
-                      <i className="link-icon" data-feather="shield"></i>
+                    <NavLink
+                      to="/reports"
+                      className="nav-link"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        window.location.href = "/reports";
+                      }}
+                    >
+                      <i className="link-icon" data-feather="pie-chart"></i>
                       <span className="link-title">Reportes</span>
                     </NavLink>
                   </li>
@@ -188,12 +196,26 @@ function AppLayout() {
                     <div className="collapse" id="clients">
                       <ul className="nav sub-menu">
                         <li className="nav-item">
-                          <NavLink to="/new-client" className="nav-link">
+                          <NavLink
+                            to="/new-volunteer"
+                            className="nav-link"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              window.location.href = "/new-volunteer";
+                            }}
+                          >
                             Nuevo voluntario
                           </NavLink>
                         </li>
                         <li className="nav-item">
-                          <NavLink to="/clients" className="nav-link">
+                          <NavLink
+                            to="/volunteers"
+                            className="nav-link"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              window.location.href = "/volunteers";
+                            }}
+                          >
                             Voluntarios
                           </NavLink>
                         </li>
@@ -201,28 +223,58 @@ function AppLayout() {
                     </div>
                   </li>
                   <li className="nav-item">
-                    <NavLink to="/ShiftAvailability" className="nav-link">
+                    <NavLink
+                      to="/shift-availability"
+                      className="nav-link"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        window.location.href = "/shift-availability";
+                      }}
+                    >
                       <i className="link-icon" data-feather="clock"></i>
                       <span className="link-title">
                         Turnos y disponibilidad
                       </span>
                     </NavLink>
                   </li>
+
                   <li className="nav-item">
-                    <NavLink to="/evaluation" className="nav-link">
+                    <NavLink
+                      to="/evaluation"
+                      className="nav-link"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        window.location.href = "/evaluation";
+                      }}
+                    >
                       <i className="link-icon" data-feather="clipboard"></i>
                       <span className="link-title">Evaluaciones</span>
                     </NavLink>
                   </li>
+
                   <li className="nav-item">
-                    <NavLink to="/trainings" className="nav-link">
+                    <NavLink
+                      to="/trainings"
+                      className="nav-link"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        window.location.href = "/trainings";
+                      }}
+                    >
                       <i className="link-icon" data-feather="book"></i>
                       <span className="link-title">Capacitaciones</span>
                     </NavLink>
                   </li>
                   <li className="nav-item nav-category">Datos</li>
                   <li className="nav-item">
-                    <NavLink to="/reportsAdmin" className="nav-link">
+                    <NavLink
+                      to="/reports-admin"
+                      className="nav-link"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        window.location.href = "/reports-admin";
+                      }}
+                    >
                       <i className="link-icon" data-feather="pie-chart"></i>
                       <span className="link-title">Reportes</span>
                     </NavLink>
@@ -232,25 +284,40 @@ function AppLayout() {
               {user?.rol === 0 && (
                 <>
                   <li className="nav-item">
-                    <NavLink to="/profile" className="nav-link">
-                      <i className="link-icon" data-feather="user"></i>
-                      <span className="link-title">Mi perfil</span>
-                    </NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink to="/AvailabilityUser" className="nav-link">
+                    <NavLink
+                      to="/availability-user"
+                      className="nav-link"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        window.location.href = "/availability-user";
+                      }}
+                    >
                       <i className="link-icon" data-feather="calendar"></i>
                       <span className="link-title">Turno y disponibilidad</span>
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink to="/TradinUser" className="nav-link">
+                    <NavLink
+                      to="/tradin-user"
+                      className="nav-link"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        window.location.href = "/tradin-user";
+                      }}
+                    >
                       <i className="link-icon" data-feather="book"></i>
-                      <span className="link-title">Capacitacion</span>
+                      <span className="link-title">Capacitación</span>
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink to="/Attendance" className="nav-link">
+                    <NavLink
+                      to="/attendance"
+                      className="nav-link"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        window.location.href = "/attendance";
+                      }}
+                    >
                       <i className="link-icon" data-feather="info"></i>
                       <span className="link-title">Asistencia</span>
                     </NavLink>
@@ -314,9 +381,20 @@ function AppLayout() {
                           href=""
                           className="text-body ms-0"
                         >
-                          <i className="me-2 icon-md" data-feather="log-out" />
-                          <span>Salir</span>
+                          <div>
+                            <i
+                              className="me-2 icon-md"
+                              data-feather="log-out"
+                            />
+                            <span>Salir</span>
+                          </div>
                         </a>
+                      </li>
+                      <li className="dropdown-item py-2">
+                        <NavLink to="/profile" className="text-body ms-0">
+                          <i className="me-2 icon-md" data-feather="user" />
+                          <span>Perfil</span>
+                        </NavLink>
                       </li>
                     </ul>
                   </div>
